@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button can be disabled 1`] = `
+<button
+  className="Button__StyledButton-rouxfp-0 fJnIHx"
+  color="primary"
+  disabled={true}
+  onClick={[Function]}
+  size="md"
+  type="default"
+>
+  disabled button
+</button>
+`;
+
+exports[`Button renders correctly 1`] = `
+<button
+  className="Button__StyledButton-rouxfp-0 kKoQhg"
+  color="primary"
+  disabled={false}
+  onClick={[Function]}
+  size="md"
+  type="default"
+>
+  Test
+</button>
+`;
+
+exports[`Button takes props 1`] = `
+<button
+  className="Button__StyledButton-rouxfp-0 kDSSdi"
+  color="secondary"
+  disabled={false}
+  onClick={[Function]}
+  size="lg"
+  type="default"
+>
+  Secondary Button
+</button>
+`;
