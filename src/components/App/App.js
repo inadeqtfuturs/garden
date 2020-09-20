@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ThemeProvider as UIThemeProvider } from 'theme-ui';
 import { theme } from '@theme';
 
 const Global = createGlobalStyle`
@@ -11,8 +13,10 @@ const Global = createGlobalStyle`
 export default function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <Global />
-      <Component {...pageProps} />
+      <UIThemeProvider theme={theme}>
+        <Global />
+        <Component {...pageProps} />
+      </UIThemeProvider>
     </ThemeProvider>
   );
 }

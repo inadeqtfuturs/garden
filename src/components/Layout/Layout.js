@@ -1,13 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Header, Footer, Main, PageWrapper } from '@components';
+import { Branding, Header, Footer, Main, Menu, PageWrapper } from '@components';
+
+const menuItems = [
+  { label: 'garden', href: '/garden' },
+  { label: 'about', href: '/about' }
+];
 
 function Layout({ children }) {
   return (
     <PageWrapper>
-      <Header />
+      <Header>
+        <Branding />
+        <Menu menuItems={menuItems} />
+      </Header>
       <Main>{children}</Main>
-      <Footer />
+      <Footer>
+        <small>...they don't have to know that it's haunted</small>
+      </Footer>
     </PageWrapper>
   );
 }

@@ -7,7 +7,6 @@ import { theme } from '@theme';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   ${layout}
   ${space}
 `;

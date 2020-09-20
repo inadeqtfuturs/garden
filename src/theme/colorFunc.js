@@ -18,8 +18,8 @@ export const getProp = path => props => {
   return get(props.theme, path);
 };
 
-export const getBorder = (border, color) => props => {
+/* export const getBorder = (border, color) => props => {
   const b = get(props.theme, `borders[1]`);
   const c = get(props.theme, `colors.primary`);
   return `${b} ${c}`;
-};
+}; */

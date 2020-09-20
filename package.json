@@ -15,12 +15,17 @@
     "@styled-system/theme-get": "^5.1.2",
     "@theme-ui/color": "^0.3.1",
     "babel-plugin-styled-components": "^1.10.7",
+    "fast-glob": "^3.2.4",
+    "gray-matter": "^4.0.2",
+    "markdown-link-extractor": "^1.2.5",
     "next": "^9.5.2",
+    "next-mdx-remote": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "theme-ui": "^0.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

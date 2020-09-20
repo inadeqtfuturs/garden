@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { ContentWrapper } from '@components';
 
-const StyledFooter = styled.footer``;
+const StyledFooter = styled.footer`
+  margin-top: 1rem;
+`;
 
 function Footer({ children }) {
   return (

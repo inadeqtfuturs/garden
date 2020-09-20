@@ -1,4 +1,5 @@
 import { system } from 'styled-system';
+import { alpha } from '@theme-ui/color';
 import {
   headingBase,
   fontWeights,
@@ -19,7 +20,7 @@ import {
  */
 
 const bp = [576, 768, 992, 1200, 1400];
-const contentAtBp = [540, 720, 960, 1140, 1320];
+const contentAtBp = [540, 720, 840, 1000, 1000];
 const baseFontSize = 16;
 const colors = {
   text: '#333',
@@ -106,6 +107,19 @@ const theme = {
         lineHeight: 1.5,
         margin: 0,
         marginBottom: 3
+      },
+      small: {
+        marginBottom: 1
+      },
+      a: {
+        textDecoration: 'none',
+        borderBottom: `1px solid ${colors.accent}`,
+        color: colors.primary,
+        fontSize: [2, 2, 2, 3],
+        '&:hover': {
+          color: colors.text,
+          backgroundColor: alpha(colors.accent, 0.2)
+        }
       }
     }
   }
