@@ -28,7 +28,7 @@ deploy with vercel or netlify
 ## todo
 
 - [ ] documentation
-- [ ] dark/light theme
+- [X] dark/light theme
 - [ ] storybook
 - [ ] images/image optimization
 - [ ] search
