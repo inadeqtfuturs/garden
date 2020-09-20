@@ -24,9 +24,9 @@ deploy with vercel
 
 ## todo
 
-[ ]: dark/light theme
-[ ]: storybook
-[ ]: roam style backlinks
-[ ]: cli -- allows for markdown parity
-[ ]: specify layout through frontmatter
-[ ]: multiple content directories
+- [ ]: dark/light theme
+- [ ]: storybook
+- [ ]: roam style backlinks
+- [ ]: cli -- allows for markdown parity
+- [ ]: specify layout through frontmatter
+- [ ]: multiple content directories
