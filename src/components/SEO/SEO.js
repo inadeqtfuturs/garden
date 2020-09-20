@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import siteConfig from 'src/config';
+import siteConfig from '@config';
 
 export default function SEO({
   title,

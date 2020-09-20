@@ -6,5 +6,9 @@ export default {
   favicon: '/favicon.ico',
   ogImage: '/ogImage.jpg',
   url: 'digital-garden.dev',
-  content: './src/garden'
+  content: './src/garden',
+  menu: [
+    { label: 'garden', href: '/garden' },
+    { label: 'about', href: '/about' }
+  ]
 };

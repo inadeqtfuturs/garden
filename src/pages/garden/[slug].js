@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import hydrate from 'next-mdx-remote/hydrate';
 import { Post } from '@layouts';
 import { getAllPosts } from '@utils';
-import siteConfig from 'src/config';
+import siteConfig from '@config';
 
 export default function GardenPost({ mdxSource, frontMatter }) {
   const { mentionedIn } = frontMatter;

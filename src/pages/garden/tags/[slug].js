@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Excerpt, Layout, SEO } from '@components';
 import { getAllPosts } from '@utils';
-import siteConfig from 'src/config';
+import siteConfig from '@config';
 
 export default function TagIndex({ posts, tag }) {
   return (

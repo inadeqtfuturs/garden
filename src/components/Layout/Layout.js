@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Branding, Header, Footer, Main, Menu, PageWrapper } from '@components';
-
-const menuItems = [
-  { label: 'garden', href: '/garden' },
-  { label: 'about', href: '/about' }
-];
+import siteConfig from '@config';
 
 function Layout({ children }) {
+  const { menu } = siteConfig;
   return (
     <PageWrapper>
       <Header>
         <Branding />
-        <Menu menuItems={menuItems} />
+        <Menu menuItems={menu} />
       </Header>
       <Main>{children}</Main>
       <Footer>
