@@ -1,11 +1,14 @@
 # 🌱 digital garden
 
-garden is an opinionated, batteries included boilerplate for md/x authoring with next.js.
+![version](https://img.shields.io/badge/dynamic/json?color=blue&label=version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2Finadeqtfuturs%2Fgarden%2Fmain%2Fpackage.json)
+![CI](https://github.com/inadeqtfuturs/garden/workflows/CI/badge.svg)
+
+an opinionated, batteries included boilerplate for md/x authoring with next.js.
 
 ## tech
 
 - nextjs
-- md/mdx authoring - uses [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote)
+- md/mdx authoring using [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote)
 - theme-ui
 - styled-components
 - jest/github actions (ci/cd)
@@ -20,13 +23,15 @@ yarn
 yarn dev
 ```
 
-deploy with vercel
+deploy with vercel or netlify
 
 ## todo
 
 - [ ] dark/light theme
 - [ ] storybook
 - [ ] roam style backlinks
+- [ ] search
+- [ ] pagination
 - [ ] cli -- allows for markdown parity
 - [ ] specify layout through frontmatter
 - [ ] multiple content directories
