@@ -1,30 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { layout, space } from 'styled-system';
-import { theme } from '@theme';
+import { flex, layout, space } from 'styled-system';
+import { genTheme } from '@theme';
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flex}
   ${layout}
   ${space}
 `;
 
-function ContentWrapper({ children }) {
+const theme = genTheme();
+function ContentWrapper({ children, direction }) {
   return (
-    <Wrapper mx={[3, 'auto']} width={theme.contentWidth} height="100%">
+    <Wrapper
+      mx={[3, 'auto']}
+      width={theme.contentWidth}
+      height="100%"
+      flexDirection={direction}
+    >
       {children}
     </Wrapper>
   );
 }
 
 ContentWrapper.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  direction: PropTypes.oneOf(['column', 'row'])
 };
 
 ContentWrapper.defaultProps = {
-  children: null
+  children: null,
+  direction: 'column'
 };
 
 export default ContentWrapper;

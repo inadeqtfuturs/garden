@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@newhighsco/next-plugin-svgr": "^3.0.1",
     "@styled-system/theme-get": "^5.1.2",
     "@theme-ui/color": "^0.3.1",
     "babel-plugin-styled-components": "^1.10.7",

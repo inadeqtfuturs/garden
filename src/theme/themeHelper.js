@@ -15,8 +15,7 @@ const spaceArray = [0, 0.25, 0.5, 1, 2, 4, 8];
 export const headingBase = {
   fontFamily: 'heading',
   margin: 0,
-  fontWeight: 400,
-  color: '#555'
+  fontWeight: 400
 };
 
 export const fontWeights = {

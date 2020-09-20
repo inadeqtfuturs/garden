@@ -27,11 +27,13 @@ deploy with vercel or netlify
 
 ## todo
 
+- [ ] documentation
 - [ ] dark/light theme
 - [ ] storybook
-- [ ] roam style backlinks
+- [ ] images/image optimization
 - [ ] search
 - [ ] pagination
+- [ ] roam style backlinks
 - [ ] cli -- allows for markdown parity
 - [ ] specify layout through frontmatter
 - [ ] multiple content directories
