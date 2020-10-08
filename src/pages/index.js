@@ -15,15 +15,43 @@ export default function Home({ recentPosts }) {
         </span>
       </h1>
       <article>
-        <p>opinionated boilerplate for your digital gardening</p>
-        <ul>
+        <p style={{ fontSize: '1.125rem' }}>
+          <span role="img" aria-label="waving hand">
+            👋
+          </span>
+          hi. welcome to digital-garden.dev, where i'm building (and writing
+          about building) a next.js powered digital garden starter. 'garden' is
+          opinionated boilerplate for your digital gardening. check out the{' '}
+          <a
+            href="https://github.com/inadeqtfuturs/garden"
+            style={{ fontSize: '1.125rem' }}
+          >
+            repo
+          </a>
+          , and read about some of the motivations for building garden below.
+        </p>
+        <p style={{ fontSize: '1.125rem' }}>
+          here are some of the things garden does out of the box:
+        </p>
+        <ul style={{ fontSize: '1.125rem' }}>
           <li>mdx and next.js powered static site generation</li>
           <li>build relations between and among mdx files</li>
           <li>easy styling using theme-ui and styled-system</li>
         </ul>
+        <p style={{ fontSize: '1.125rem' }}>
+          here are some of the things coming soon:
+        </p>
+        <ul style={{ fontSize: '1.125rem' }}>
+          <li>search and tag filtering</li>
+          <li>
+            source content from different sources and render with related
+            templates
+          </li>
+          <li>cli for scaffolding content</li>
+        </ul>
       </article>
       <div>
-        <h3>recent posts</h3>
+        <h2>recent posts</h2>
         {recentPosts.map(post => (
           <Excerpt post={post} key={post.slug} />
         ))}

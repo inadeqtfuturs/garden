@@ -28,7 +28,7 @@ exports[`Button renders correctly 1`] = `
 
 exports[`Button takes props 1`] = `
 <button
-  className="Button__StyledButton-rouxfp-0 kDSSdi"
+  className="Button__StyledButton-rouxfp-0 gMHSmI"
   color="secondary"
   disabled={false}
   onClick={[Function]}

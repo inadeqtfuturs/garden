@@ -1,0 +1,53 @@
+---
+title: 00 - digital garden
+author: alex christie
+date: '2020-10-04'
+type: post
+tags:
+  - digital garden
+  - nextjs
+  - notes
+  - speculative development
+description: a brief introduction to garden, an opinionated and batteries included boilerplate for nextjs digital gardens
+draft: false
+---
+
+> 'This is an experiment, not a judgement,' (Kathleen Stewart, *Ordinary Affects*)
+
+### introduction
+
+Garden is an opinionated, batteries included boilerplate for next.js digital gardens. It offers low friction authoring via markdown and mdx, static generation via next.js, and easy styling using theme-ui and styled-components. In this way, Garden tries to solve some low level problems for users, helping them to start writing and/or augment what's provided here. Use this as a starting point to build whatever you need.
+
+### features
+
+Garden tries to take some of the thinking out of starting a digital garden. Here's some of the stuff it comes with:
+
+- `getStaticPaths` and `getStaticProps` to render local mdx.
+- `next-mdx-remote` to handle server and client side hydration
+- `markdown-link-extractor` to help build relations between mdx files ('mentioned in')
+- tags page(s) to aggregate related content
+- extensive but minimal `theme-ui` object -- style mdx and hook into and extend theme-ui components
+- SEO defaults and extendable config
+
+More features to come include:
+
+- search and tag filtering
+- `styled-system` controlled components
+- source data from multiple sources
+- customizable templates for different data
+- cli for scaffolding content
+
+### gardening // experimentation
+
+In a [previous post about gardening](/garden/rethinking-digital-gardening), I ended up asking a lot of questions about what might come from reevaluating the garden metaphor, transposing it into a verb, and thinking about the act of gardening rather than the particular place or form of the garden. Something that emerged as important was the relation between learning in public and gardening:
+
+> What I'm trying to think through is the relation between public, ecology, and gardening (as a practice). This is what I mean when I say I am thinking about gardening as a socio-spatial metaphor and practice -- can we use gardening to develop a more robust ecology for learning? How is the practice of learning in public related to the co-constitution of what we might call 'alternative ecological arrangements'?
+
+One way of practicing this relation might be an experiment in self-documentation. What can be gleaned from and what can be learned from documenting garden's development? What can be learned from the public use of something that's in progress? How does learning in public shape and reshape the form and function of this project? My plan is to gradually implement new features while writing about their implementation. It's an experimentation in self-documentation or an effort to work through the problem of building and learning in public. It's a kind of meta-gardening (though maybe it'll turn out that all gardening is meta-gardening).
+
+Because this is an experiment and I don't know what exactly will be needed, I'm leaving the feature list open. New things might be added, while some functionality might be abandoned. I'm interested in letting things grow organically on a needed basis.
+
+### up next
+
+- [ ] documentation
+- [ ] search implementation

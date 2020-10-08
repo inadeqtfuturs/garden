@@ -93,6 +93,10 @@ export function getFontSizes(base) {
   return fontSizeArray.map(value => convertToRem(base * value));
 }
 
+export function getLineHeight(base, rhythm, values) {
+  return values.map(val => `${rhythm * fontSizeArray[val]}rem`);
+}
+
 export function getSpaceSizes(base) {
   return spaceArray.map(value => convertToRem(base * value));
 }

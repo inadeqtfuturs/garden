@@ -1,6 +1,6 @@
 {
   "name": "garden",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "alex christie (alexj.christie@gmail.com)",
   "license": "MIT",
   "private": false,
@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@newhighsco/next-plugin-svgr": "^3.0.1",
-    "@styled-system/theme-get": "^5.1.2",
     "@theme-ui/color": "^0.3.1",
     "babel-plugin-styled-components": "^1.10.7",
     "fast-glob": "^3.2.4",

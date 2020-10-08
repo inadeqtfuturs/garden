@@ -13,7 +13,6 @@ const Nav = styled.nav`
 `;
 
 function Menu({ menuItems }) {
-  // const [open, toggleOpen] = useState(false);
   return (
     <Nav>
       {menuItems.map(({ href, label }) => (

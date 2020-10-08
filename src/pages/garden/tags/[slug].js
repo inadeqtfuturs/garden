@@ -8,7 +8,7 @@ export default function TagIndex({ posts, tag }) {
   return (
     <Layout>
       <SEO title={`posts tagged ${tag}`} />
-      <h2>posts tagged {tag}</h2>
+      <h2>posts tagged '{tag}'</h2>
       {posts.map(post => (
         <Excerpt post={post} key={post.slug} />
       ))}

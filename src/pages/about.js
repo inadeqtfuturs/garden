@@ -21,9 +21,7 @@ export default function About() {
         <li>nextjs</li>
         <li>md/mdx authoring</li>
         <li>seo</li>
-        <li>
-          theme-ui - <strike>dark/light</strike>
-        </li>
+        <li>theme-ui - dark/light</li>
         <li>styled-components</li>
         <li>jest/github actions (ci/cd)</li>
         <li>

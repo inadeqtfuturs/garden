@@ -7,7 +7,8 @@ module.exports = {
     '^@theme-ui(.*)$': '<rootDir>/node_modules/@theme-ui$1',
     '^@theme(.*)$': '<rootDir>/src/theme',
     '^@theme/(.*)$': '<rootDir>/src/theme/$1',
-    '^@utils(.*)$': '<rootDir>/src/utils$1'
+    '^@utils(.*)$': '<rootDir>/src/utils$1',
+    '\\.svg': '<rootDir>/src/__mocks__/svgrMock.js'
   },
   testPathIgnorePatterns: [
     `node_modules`,

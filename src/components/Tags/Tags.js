@@ -23,15 +23,13 @@ function Tags({ tags }) {
   return (
     <Wrapper>
       tags
-      {tags
-        .sort((a, b) => a - b)
-        .map(t => (
-          <Tag key={t}>
-            <Link href="/garden/tags/[slug]" as={`/garden/tags/${t}`}>
-              {t}
-            </Link>
-          </Tag>
-        ))}
+      {tags.sort().map(t => (
+        <Tag key={t}>
+          <Link href="/garden/tags/[slug]" as={`/garden/tags/${t}`}>
+            {t}
+          </Link>
+        </Tag>
+      ))}
     </Wrapper>
   );
 }
