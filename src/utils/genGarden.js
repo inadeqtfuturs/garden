@@ -11,7 +11,27 @@ function getFormattedDate(date) {
   return formattedDate;
 }
 
-async function getAllPosts(source) {
+export async function getAllPaths(source) {
+  const contentGlob = `${source}/**/*.mdx`;
+  const files = glob.sync(contentGlob);
+
+  if (!files.length) return [];
+
+  const paths = await Promise.all(
+    files.map(async filepath => {
+      const slug = filepath
+        .replace(source, '')
+        .replace(/^\/+/, '')
+        .replace(new RegExp(`${path.extname(filepath)}$`), '');
+
+      return { slug };
+    })
+  );
+
+  return paths;
+}
+
+export async function getAllPosts(source) {
   const contentGlob = `${source}/**/*.mdx`;
   const files = glob.sync(contentGlob);
 
@@ -73,5 +93,3 @@ async function getAllPosts(source) {
 
   return allContent;
 }
-
-export default getAllPosts;

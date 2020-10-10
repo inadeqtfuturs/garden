@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import hydrate from 'next-mdx-remote/hydrate';
 import { Post } from '@layouts';
-import { getAllPosts } from '@utils';
+import { getAllPaths, getAllPosts } from '@utils';
 import siteConfig from '@config';
 
 export default function GardenPost({ mdxSource, frontMatter }) {
@@ -25,8 +25,9 @@ GardenPost.propTypes = {
 
 export async function getStaticPaths() {
   const { content } = siteConfig;
-  const posts = await getAllPosts(content);
-  const paths = posts.map(({ slug }) => ({
+  const routes = await getAllPaths(content);
+
+  const paths = routes.map(({ slug }) => ({
     params: {
       slug
     }

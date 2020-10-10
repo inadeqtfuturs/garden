@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import { alpha } from '@theme-ui/color';
+import styled from 'styled-components';
 import { Link, Tags } from '@components';
 
 const PostExcerpt = styled.div`
@@ -11,12 +10,6 @@ const PostExcerpt = styled.div`
   small {
     text-transform: uppercase;
   }
-  &:hover,
-  &:focus {
-    ${({ theme }) => css`
-      background-color: ${alpha(theme.colors.accent, 0.2)};
-    `}
-  }
 `;
 
 function Excerpt({ post }) {
@@ -24,14 +17,14 @@ function Excerpt({ post }) {
     frontMatter: { title, date, description, slug, tags }
   } = post;
   return (
-    <Link href="/garden/[slug]" as={slug}>
-      <PostExcerpt>
-        <small>{date}</small>
+    <PostExcerpt>
+      <small>{date}</small>
+      <Link href="/garden/[slug]" as={slug}>
         <h3>{title}</h3>
-        <p>{description}</p>
-        <Tags tags={tags} />
-      </PostExcerpt>
-    </Link>
+      </Link>
+      <p>{description}</p>
+      <Tags tags={tags} />
+    </PostExcerpt>
   );
 }
 
