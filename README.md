@@ -5,7 +5,7 @@
 
 an opinionated, batteries included boilerplate for md/x authoring with next.js.
 
-checkout the [documentation](documentation.md) to get started.
+checkout the [documentation](DOCUMENTATION.md) to get started.
 
 ## tech
 
@@ -31,11 +31,14 @@ deploy with vercel or netlify
 
 - [x] documentation
 - [x] dark/light theme
+- [x] search
+- [ ] syntax highlighting
 - [ ] storybook
-- [ ] images/image optimization
-- [ ] search
-- [ ] pagination
-- [ ] roam style backlinks
-- [ ] cli -- allows for markdown parity
-- [ ] specify layout through frontmatter
 - [ ] multiple content directories
+- [ ] specify layout through frontmatter
+- [ ] roam style backlinks
+- [ ] link preview
+- [ ] last updated
+- [ ] pagination
+- [ ] images/image optimization
+- [ ] cli -- allows for markdown parity
