@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { ThemeProvider as UIThemeProvider } from 'theme-ui';
+import Prism from '@theme-ui/prism';
 import { darkTheme, genTheme, ThemeContext } from '@theme';
 
 const Global = createGlobalStyle`
@@ -9,6 +10,11 @@ const Global = createGlobalStyle`
     margin: 0;
   }
 `;
+
+const components = {
+  pre: ({ children }) => <>{children}</>,
+  code: Prism
+};
 
 const theme = genTheme();
 const dark = genTheme({ ...darkTheme });
@@ -26,7 +32,10 @@ export default function MyApp({ Component, pageProps }) {
       }}
     >
       <ThemeProvider theme={currentTheme === 'light' ? theme : dark}>
-        <UIThemeProvider theme={currentTheme === 'light' ? theme : dark}>
+        <UIThemeProvider
+          theme={currentTheme === 'light' ? theme : dark}
+          components={components}
+        >
           <Global />
           <Component {...pageProps} />
         </UIThemeProvider>

@@ -1,0 +1,91 @@
+---
+title: 01 - searching with fuse.js
+author: alex christie
+date: '2020-10-10'
+type: post
+tags:
+  - digital garden
+  - nextjs
+  - documentation
+  - feature implementation
+  - fuse.js
+description: adding search to next.js powered static sites with fuse.js
+draft: false
+---
+
+This post documents adding search to next.js powered static sites using [fuse.js](https://fusejs.io/). When deciding how to implement search functionality, I ended up choosing between a custom implementation (basically just filtering arrays) and using a dedicated library. While I tend not to reach for off the shelf solutions, I chose fuse because it has UMD and commonJS support and will likely be helpful to eventually build out the cli.
+
+1. initialize fuse to search through the posts
+2. hook up the search function to text input
+3. return filtered list of posts
+
+### initialize fuse
+
+I'm adding search to the [garden page](/garden) because it already has access to all the post data needed to actually search. I have an array of posts with the following shape:
+
+```js
+  post = {
+    content,
+    frontmatter: {
+      tags: [],
+      title
+    }
+  }
+```
+
+Because it's searching a nested list, we need to tell fuse which fields to search for:
+
+```js
+  const options = {
+    keys: ['content', 'frontmatter.title', 'frontmatter.tags']
+  };
+  const fuse = new Fuse(posts, options);
+```
+
+### hook up search input
+
+We'll use a hook to keep track of the search value. The one extra piece here is [debouncing](https://css-tricks.com/debouncing-throttling-explained-examples/) the input. I like this a bit better than throttling since I'm guessing users will be entering single words rather than phrases.
+
+```js
+  import debounce from 'lodash.debounce';
+
+  const [searchVal, setSearchVal] = useState('');
+
+  const debounceQuery = debounce(val => setSearchVal(val), 333);
+  const updateSearchVal = e => {
+    const { value } = e.target;
+    debounceQuery(value);
+  };
+
+  ...
+
+  <input value={searchVal} onChange={updateSearchVal} />
+```
+
+### return filtered list of posts
+
+Last thing to do is filter the posts based on the search criteria. The `else` statement resets the `postState` back to its initial state when the search field is empty.
+
+```js
+  const [postState, setPostState] = useState(posts);
+  useEffect(() => {
+    if (searchVal) {
+      const filteredPosts = fuse.search(searchVal).map(p => p.item);
+      setPostState(filteredPosts);
+    } else {
+      setPostState(posts);
+    }
+  }, [searchVal]);
+```
+
+### wrapping up
+
+A tribute to fuse, to be sure, this was extremely easy. This logic will need to be extended at some point to do tag filtering, too, but that can wait until there's more content.
+
+One thing that came up while working on this was the lack of syntax highlighting -- something I wholesale forgot -- so I'll be adding that next.
+
+### up next
+
+- [ ] syntax highlighting
+- [ ] content directories
+- [ ] templating

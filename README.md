@@ -5,6 +5,8 @@
 
 an opinionated, batteries included boilerplate for md/x authoring with next.js.
 
+checkout the [documentation](documentation.md) to get started.
+
 ## tech
 
 - nextjs
@@ -16,7 +18,7 @@ an opinionated, batteries included boilerplate for md/x authoring with next.js.
 
 ## run or deploy
 
-fork repo, then
+fork or clone
 
 ```bash
 yarn
@@ -27,8 +29,8 @@ deploy with vercel or netlify
 
 ## todo
 
-- [ ] documentation
-- [X] dark/light theme
+- [x] documentation
+- [x] dark/light theme
 - [ ] storybook
 - [ ] images/image optimization
 - [ ] search

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link, Tags } from '@components';
 
 const PostExcerpt = styled.div`
-  padding: 1rem;
+  padding: 1rem 0;
   margin-bottom: 2rem;
   border-radius: 6px;
   small {

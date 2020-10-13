@@ -14,9 +14,12 @@
   "dependencies": {
     "@newhighsco/next-plugin-svgr": "^3.0.1",
     "@theme-ui/color": "^0.3.1",
+    "@theme-ui/prism": "^0.3.0",
     "babel-plugin-styled-components": "^1.10.7",
     "fast-glob": "^3.2.4",
+    "fuse.js": "^6.4.1",
     "gray-matter": "^4.0.2",
+    "lodash": "^4.17.20",
     "markdown-link-extractor": "^1.2.5",
     "next": "^9.5.2",
     "next-mdx-remote": "^1.0.0",
