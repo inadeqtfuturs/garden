@@ -10,9 +10,9 @@ const InnerWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: ${({ theme }) => `${theme.space[2]} 0`};
+  padding: ${({ theme }) => `${theme.space[3]} 0`};
   ${({ theme }) => theme.md`
-    padding: ${theme.space[4]} 0 ${theme.space[2]};
+    padding: ${theme.space[4]} 0 ${theme.space[3]};
   `}
 `;
 

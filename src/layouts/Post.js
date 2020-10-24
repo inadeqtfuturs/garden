@@ -5,10 +5,10 @@ import { alpha } from '@theme-ui/color';
 import { Layout, Link, SEO, Tags } from '@components';
 
 const Article = styled.article`
-  display: grid;
-  grid-gap: 2rem;
   ${({ theme }) => css`
-    ${theme.md`
+    ${theme.lg`
+      display: grid;
+      grid-gap: 2rem;
       grid-template-columns: 2fr 1fr;
     `}
     ${theme.xl`
@@ -16,12 +16,14 @@ const Article = styled.article`
     `}
   `}
 `;
+
 const Header = styled.div`
   margin-bottom: 2rem;
   p {
     margin: 0 0 0.25rem;
   }
 `;
+
 const LinkWrapper = styled.div`
   ${({ theme }) => css`
     width: 45%;
@@ -40,6 +42,7 @@ const LinkWrapper = styled.div`
     }
   `}
 `;
+
 const MentionedIn = styled.div`
   ${({ theme }) => css`
     padding: ${theme.space[3]};
@@ -51,10 +54,14 @@ const MentionedIn = styled.div`
     margin-bottom: 1rem;
   `}
   p {
-    margin: 0;
+    margin: 0.25rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 `;
+
 const MentionedWrapper = styled.aside``;
+
 const PaginationWrapper = styled.nav`
   display: flex;
   align-items: flex-start;
@@ -81,7 +88,7 @@ function Post({ content, frontMatter, mentionedIn }) {
         <MentionedWrapper>
           {mentionedIn && (
             <>
-              <h3>mentioned in</h3>
+              <h4>mentioned in</h4>
               {mentionedIn.map(
                 ({
                   frontMatter: {
@@ -92,7 +99,7 @@ function Post({ content, frontMatter, mentionedIn }) {
                 }) => (
                   <Link href="/garden/[slug]" as={slug} key={slug}>
                     <MentionedIn>
-                      <h4>{mentionedTitle}</h4>
+                      <h5>{mentionedTitle}</h5>
                       <p>{mentionedDescription}</p>
                     </MentionedIn>
                   </Link>

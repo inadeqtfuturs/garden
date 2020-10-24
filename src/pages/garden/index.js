@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 import { debounce } from 'lodash';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Excerpt, Layout, SEO } from '@components';
 import { getAllPosts } from '@utils';
 import siteConfig from '@config';
@@ -14,12 +14,16 @@ const options = {
 const StyledInput = styled.input`
   font-size: 18px;
   border: none;
-  border-bottom: 1px solid #555;
-  &:hover,
-  &:focus {
-    outline: none;
-    border-bottom: 2px solid #b7e2d8;
-  }
+  ${({ theme }) => css`
+    background-color: ${theme.colors.background};
+    color: ${theme.colors.text};
+    border-bottom: 1px solid ${theme.colors.text};
+    &:hover,
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid ${theme.colors.primary};
+    }
+  `}
 `;
 
 function Garden({ posts }) {

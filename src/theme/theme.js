@@ -96,7 +96,8 @@ function genTheme({ colors } = { colors: defaultColors }) {
         h4: {
           ...headingBase,
           fontSize: [2, 2, 3, 4],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 3, 4])
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 3, 4]),
+          marginBottom: 2
         },
         h5: {
           ...headingBase,
