@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { ThemeProvider as UIThemeProvider } from 'theme-ui';
-import Prism from '@theme-ui/prism';
-import { darkTheme, genTheme, ThemeContext } from '@theme';
+import { defaultColors, genTheme, ThemeContext } from '@theme';
+import siteConfig from '@config';
 
 const Global = createGlobalStyle`
   body {
@@ -11,31 +11,32 @@ const Global = createGlobalStyle`
   }
 `;
 
-const components = {
-  pre: ({ children }) => <>{children}</>,
-  code: Prism
+const { themes = { default: { colors: defaultColors } } } = siteConfig;
+const modeList = {
+  modes: Object.keys(themes),
+  modeThemes: Object.keys(themes).map(theme => {
+    return genTheme({ ...themes[theme] });
+  })
 };
 
-const theme = genTheme();
-const dark = genTheme({ ...darkTheme });
-
 export default function MyApp({ Component, pageProps }) {
-  const [currentTheme, setTheme] = useState('light');
-  const toggleTheme = () =>
-    currentTheme === 'light' ? setTheme('dark') : setTheme('light');
+  const [currentMode, setMode] = useState('default');
+  const { modes, modeThemes } = modeList;
+  const toggleMode = () => {
+    const index = modes.indexOf(currentMode);
+    const next = modes[(index + 1) % modes.length];
+    setMode(next);
+  };
 
   return (
     <ThemeContext.Provider
       value={{
-        currentTheme,
-        toggleTheme
+        currentMode,
+        toggleMode
       }}
     >
-      <ThemeProvider theme={currentTheme === 'light' ? theme : dark}>
-        <UIThemeProvider
-          theme={currentTheme === 'light' ? theme : dark}
-          components={components}
-        >
+      <ThemeProvider theme={modeThemes[modes.indexOf(currentMode)]}>
+        <UIThemeProvider theme={modeThemes[modes.indexOf(currentMode)]}>
           <Global />
           <Component {...pageProps} />
         </UIThemeProvider>

@@ -12,7 +12,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@newhighsco/next-plugin-svgr": "^3.0.1",
     "@theme-ui/color": "^0.3.1",
     "@theme-ui/prism": "^0.3.0",
     "babel-plugin-styled-components": "^1.10.7",
@@ -23,12 +22,14 @@
     "markdown-link-extractor": "^1.2.5",
     "next": "^9.5.2",
     "next-mdx-remote": "^1.0.0",
+    "prism-react-renderer": "^1.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1",
     "styled-system": "^5.1.5",
-    "theme-ui": "^0.3.1"
+    "theme-ui": "^0.3.1",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

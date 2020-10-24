@@ -1,28 +1,28 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { alpha } from '@theme-ui/color';
 import { Branding, Header, Footer, Main, Menu, PageWrapper } from '@components';
 import { ThemeContext } from '@theme';
 import siteConfig from '@config';
-import { ReactComponent as Moon } from 'public/moon.svg';
-import { ReactComponent as Sun } from 'public/sun.svg';
 
-const ThemeToggle = styled.button`
-  padding: 0;
+const ToggleButton = styled.button`
   background: transparent;
-  border: none;
-  &:hover {
-    cursor: pointer;
-  }
+  border: 1px solid;
   ${({ theme }) => css`
-    svg {
-      stroke: ${theme.colors.primary};
+    padding: ${theme.space[2]};
+    border-color: ${theme.colors.text};
+    border-radius: ${theme.radii.button}px;
+    color: ${theme.colors.text};
+    &:hover {
+      cursor: pointer;
+      background: ${alpha(theme.colors.text, 0.05)};
     }
   `}
 `;
 
 function Layout({ children }) {
-  const { currentTheme, toggleTheme } = useContext(ThemeContext);
+  const { currentMode, toggleMode } = useContext(ThemeContext);
   const { menu } = siteConfig;
   return (
     <PageWrapper>
@@ -33,9 +33,9 @@ function Layout({ children }) {
       <Main>{children}</Main>
       <Footer>
         <small>...they don't have to know that it's haunted</small>
-        <ThemeToggle type="button" onClick={() => toggleTheme()}>
-          {currentTheme === 'light' ? <Sun /> : <Moon />}
-        </ThemeToggle>
+        <ToggleButton type="button" onClick={() => toggleMode()}>
+          {currentMode}
+        </ToggleButton>
       </Footer>
     </PageWrapper>
   );

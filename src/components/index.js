@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 // block level components
 export { default as Button } from './Button/Button';
+export { default as Code } from './Code/Code';
 export { default as ContentWrapper } from './ContentWrapper/ContentWrapper';
 export { default as Excerpt } from './Excerpt/Excerpt';
 export { default as Link } from './Link/Link';

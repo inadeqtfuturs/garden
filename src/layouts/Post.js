@@ -33,10 +33,10 @@ const LinkWrapper = styled.div`
       flex-direction: column;
       padding: ${theme.space[3]};
       border-radius: 6px;
-      background-color: ${alpha(theme.colors.primary, 0.05)};
+      background-color: ${alpha(theme.colors.text, 0.05)};
     }
     a:hover {
-      background-color: ${alpha(theme.colors.accent, 0.2)};
+      background-color: ${alpha(theme.colors.primary, 0.2)};
     }
   `}
 `;
@@ -44,9 +44,9 @@ const MentionedIn = styled.div`
   ${({ theme }) => css`
     padding: ${theme.space[3]};
     border-radius: 6px;
-    background-color: ${alpha(theme.colors.primary, 0.05)};
+    background-color: ${alpha(theme.colors.text, 0.05)};
     &:hover {
-      background-color: ${alpha(theme.colors.accent, 0.2)};
+      background-color: ${alpha(theme.colors.primary, 0.2)};
     }
     margin-bottom: 1rem;
   `}
@@ -62,7 +62,7 @@ const PaginationWrapper = styled.nav`
   ${({ theme }) => css`
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid ${theme.colors.primary};
+    border-top: 1px solid ${theme.colors.text};
   `}
 `;
 

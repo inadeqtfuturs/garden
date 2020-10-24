@@ -1,9 +1,17 @@
+import React from 'react';
 import { promises as fs } from 'fs';
 import path from 'path';
 import renderToString from 'next-mdx-remote/render-to-string';
 import matter from 'gray-matter';
 import glob from 'fast-glob';
 import markdownLinkExtractor from 'markdown-link-extractor';
+import { Code } from '@components';
+import parseGarden from './parseGarden';
+
+const components = {
+  pre: props => <div {...props} />,
+  code: props => <Code {...props} />
+};
 
 function getFormattedDate(date) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -48,7 +56,10 @@ export async function getAllPosts(source) {
       const mdxSource = await fs.readFile(filepath);
       const { content, data } = matter(mdxSource);
       const mdx = await renderToString(content, {
-        components: null,
+        components,
+        mdxOptions: {
+          remarkPlugins: [parseGarden]
+        },
         scope: data
       });
       const links = markdownLinkExtractor(content);

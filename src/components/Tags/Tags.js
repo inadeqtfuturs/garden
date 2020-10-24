@@ -5,6 +5,7 @@ import { Link } from '@components';
 
 const Tag = styled.li`
   list-style: none;
+  display: inline;
   &::before {
     content: ', ';
   }
@@ -14,7 +15,7 @@ const Tag = styled.li`
 `;
 
 const Wrapper = styled.ul`
-  display: flex;
+  display: inline;
   padding: 0;
   margin: 0;
 `;

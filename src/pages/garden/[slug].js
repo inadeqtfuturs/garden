@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import hydrate from 'next-mdx-remote/hydrate';
 import { Post } from '@layouts';
+import { Code } from '@components';
 import { getAllPaths, getAllPosts } from '@utils';
 import siteConfig from '@config';
 
+const components = {
+  pre: props => <div {...props} />,
+  code: props => <Code {...props} />
+};
+
 export default function GardenPost({ mdxSource, frontMatter }) {
   const { mentionedIn } = frontMatter;
-  const content = hydrate(mdxSource, { components: null });
+  const content = hydrate(mdxSource, { components });
 
   return (
     <Post

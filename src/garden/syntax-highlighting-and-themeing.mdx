@@ -1,0 +1,96 @@
+---
+title: 02 - syntax highlighting and themeing
+author: alex christie
+date: '2020-10-17'
+type: post
+tags:
+  - digital garden
+  - documentation
+  - feature implementation
+  - themes
+  - quality of life
+description: adding syntax highlighting to next-mdx-remote and rethinking themeing
+draft: false
+---
+
+This post offers really brief documentation for adding syntax highlighting with [rehypePrism](https://github.com/mapbox/rehype-prism) to `next-mdx-remote`. It then outlines some considerations for handling that highlighting over and against the global theme.
+
+### syntax highlighting
+
+Syntax highlighting with next-mdx-remote can be done a few different ways. If you want to use [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer), you can find great examples in the template repos for [mdnext](https://github.com/domitriusclark/mdnext/blob/master/packages/mdnext-components/src/components/Code.js). I opted to use `rehypePrism` to render code blocks on the node side of things. All I did was pass it as an argument in `renderToString`.
+
+```js
+  import rehypePrism from '@mapbox/rehype-prism';
+
+  ...
+
+  const mdx = await renderToString(content, {
+    components: null,
+    mdxOptions: {
+      rehypePlugins: [rehypePrism]
+    },
+    scope: data
+  });
+```
+
+### themeing and syntax highlighting
+
+Initially, I just added the prism NightOwl theme and thought I'd move on, but the difference between the prism theme and the color scheme of the site had me wondering if there was a better way to handle syntax highlighting as an extension of the theme object. Some considerations:
+
+1. Syntax highlighting should be an extension of the theme
+2. This also means that it should be an extension of the dark theme
+3. Because garden is meant to be extendable, the syntax highlighting should be as simple as possible so it can be easily overridden
+4. Syntax highlighting and themeing more generally should utilize the minimum viable theme tokens or variables
+
+Thinking about syntax highlighting ultimately opened some space to think a little bit more about colors, theme tokens, and their relation garden as a whole. You can find a post about that [here](/garden/extending-themes);
+
+The approach I ended up taking, which is a design pattern I consistently fall back on, is defaults with fallbacks. To differentiate tokens in a block of code, I needed 6 colors. To accommodate undefined themes in a user config, I'm export a default color object from the theme and using that as a fallback. So now the syntax highlighting will be an extension of the current theme and fills in missing tokens with defaults. The one other thing I wanted to add was a way to define the highlighting theme based on some other theme in the config. An example: I want my syntax highlighting to be derived from the dark theme, no matter what theme is currently being used. This gives us three use cases/scenarios:
+
+1. I didn't define any themes, so default.
+2. I've defined themes. Just use those colors.
+3. I've defined themes. I want to use a specific theme for syntax highlighting.
+
+This ends up having a few moving parts:
+
+``` js
+  export const defaultColors = {
+    text: '#2d2a24',
+    background: '#fdfdfd',
+    primary: '#b7e2d8',
+    secondary: '#de7283',
+    accent: '#bcadfb',
+    muted: '#88d1ff'
+  };
+```
+
+We need to export a set of default colors to generate the theme is a user doesn't define one. It gets imported into `App.js` and used during theme generation.
+
+``` js
+  const { themes = { default: { colors: defaultColors } } } = siteConfig;
+```
+
+In the theme function, we check if the user defined a specific theme to use for syntax highlighting, and fall back to the default color pallet if not.
+
+``` js
+  const prismTheme = pt ? themes[pt].colors : colors;
+```
+
+At that point, we have the variables available in the theme object and they get passed in.
+
+### wrapping up
+
+This ended up being a helpful exercise in moving from making something that works to thinking about how I wanted it to work and implementing from that direction. In thinking through different ways one would want to define their theme object, I think I also opened up space to think about extendability here and in future projects.
+
+Working through this also highlighted the need for a different kind of post -- something shorter, and maybe just with code snippets. Next up is thinking about content directories and templating.
+
+### resources
+
+- [components.ai theme-ui](https://components.ai/theme-ui)
+- [theme-ui color modes](https://theme-ui.com/color-modes)
+- [prism theme generator](http://k88hudson.github.io/syntax-highlighting-theme-generator/www/)
+
+### up next
+
+- [x] syntax highlighting
+- [ ] content directories
+- [ ] templating
