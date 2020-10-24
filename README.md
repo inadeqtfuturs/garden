@@ -32,10 +32,10 @@ deploy with vercel or netlify
 - [x] documentation
 - [x] dark/light theme
 - [x] search
-- [ ] syntax highlighting
-- [ ] storybook
+- [x] syntax highlighting
 - [ ] multiple content directories
 - [ ] specify layout through frontmatter
+- [ ] storybook
 - [ ] roam style backlinks
 - [ ] link preview
 - [ ] last updated
