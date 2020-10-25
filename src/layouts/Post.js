@@ -52,12 +52,18 @@ const MentionedIn = styled.div`
       background-color: ${alpha(theme.colors.primary, 0.2)};
     }
     margin-bottom: 1rem;
+    p {
+      margin: 0.25rem 0 0;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+    ${theme.lg`
+      p {
+        font-size: 0.75rem;
+        line-height: 1rem;
+      }
+    `}
   `}
-  p {
-    margin: 0.25rem 0 0;
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
 `;
 
 const MentionedWrapper = styled.aside``;
@@ -88,7 +94,7 @@ function Post({ content, frontMatter, mentionedIn }) {
         <MentionedWrapper>
           {mentionedIn && (
             <>
-              <h4>mentioned in</h4>
+              <h3>mentioned in</h3>
               {mentionedIn.map(
                 ({
                   frontMatter: {

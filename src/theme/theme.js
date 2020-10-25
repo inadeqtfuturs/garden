@@ -77,48 +77,48 @@ function genTheme({ colors } = { colors: defaultColors }) {
       root: {
         h1: {
           ...headingBase,
-          fontSize: [5, 5, 6, 7],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [5, 5, 6, 7]),
+          fontSize: [6, 6, 6, 7],
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [6, 6, 6, 7]),
           marginBottom: 3
         },
         h2: {
           ...headingBase,
-          fontSize: [4, 4, 5, 6],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [4, 4, 5, 6]),
+          fontSize: [6],
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [6]),
           marginBottom: 3
         },
         h3: {
           ...headingBase,
-          fontSize: [3, 3, 4, 5],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3, 3, 4, 5]),
+          fontSize: 5,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [5]),
           marginBottom: 3
         },
         h4: {
           ...headingBase,
-          fontSize: [2, 2, 3, 4],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 3, 4]),
+          fontSize: 4,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [4]),
           marginBottom: 2
         },
         h5: {
           ...headingBase,
-          fontSize: [2, 2, 2, 3],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2])
+          fontSize: 3,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3])
         },
         h6: {
           ...headingBase,
-          fontSize: [1],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [1]),
+          fontSize: 2,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2]),
           textTransform: 'uppercase'
         },
         p: {
-          fontSize: [2, 2, 2, 3],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 2, 3]),
+          fontSize: 3,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3]),
           margin: 0,
           marginBottom: 2
         },
         ul: {
-          fontSize: [2, 2, 2, 3],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 2, 3]),
+          fontSize: 3,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3]),
           margin: 0,
           padding: '0 0 0 2rem',
           marginBottom: 2,
@@ -128,15 +128,15 @@ function genTheme({ colors } = { colors: defaultColors }) {
           }
         },
         ol: {
-          fontSize: [2, 2, 2, 3],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 2, 3]),
+          fontSize: 3,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3]),
           margin: 0,
           padding: '0 0 0 2rem',
           marginBottom: 2
         },
         blockquote: {
-          fontSize: [2, 2, 2, 3],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 2, 3]),
+          fontSize: 3,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3]),
           margin: 2,
           marginLeft: 0,
           paddingLeft: 3,
@@ -150,8 +150,8 @@ function genTheme({ colors } = { colors: defaultColors }) {
           textDecoration: 'none',
           borderBottom: `1px solid ${colors.primary}`,
           color: alpha(colors.text, 0.8),
-          fontSize: [2, 2, 2, 3],
-          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [2, 2, 2, 3]),
+          fontSize: 3,
+          lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3]),
           '&:hover': {
             color: colors.text,
             backgroundColor: alpha(colors.primary, 0.2)
@@ -162,6 +162,9 @@ function genTheme({ colors } = { colors: defaultColors }) {
           borderRadius: '6px',
           color: prismTheme.text,
           backgroundColor: lighten(prismTheme.background, 0.05),
+          fontSize: 3,
+          overflow: 'scroll',
+          whiteSpace: 'pre-wrap',
           '.selector,.attr-name,.string,.char,.builtin,.inserted': {
             color: prismTheme.primary
           },
