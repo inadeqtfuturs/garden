@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
+export { default as Note } from './Note';
 export { default as Post } from './Post';

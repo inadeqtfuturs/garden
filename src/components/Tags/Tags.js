@@ -26,9 +26,7 @@ function Tags({ tags }) {
       tags
       {tags.sort().map(t => (
         <Tag key={t}>
-          <Link href="/garden/tags/[slug]" as={`/garden/tags/${t}`}>
-            {t}
-          </Link>
+          <Link href={`/tags/${t}`}>{t}</Link>
         </Tag>
       ))}
     </Wrapper>

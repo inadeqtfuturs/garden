@@ -1,0 +1,167 @@
+---
+title: 04 - content directories in next.js
+author: alex christie
+date: '2020-10-31'
+type: post
+tags:
+  - digital garden
+  - documentation
+  - feature implementation
+  - content directories
+  - nextjs
+description: working with content directories and dynamic routes in next.js
+draft: true
+---
+
+In the next iteration of garden, I want to implement different content directories to field/contain different kinds of content. As I've written about [previously](/garden/rethinking-digital-gardening), I'm not thinking about content in a hierarchy, but marking a different kind of speed (reading and writing) when thinking. At a very high level, I want to be able to write notes (very short snippets or thoughts), posts (slightly longer thoughts, much like I'm doing now), and have projects (longer/larger and perhaps more polished pieces). Eventually, this schematization could be configurable by the user. In the meantime, I just want to be able to write a note and have it show up as something like `/note/note-title`.
+
+This post gives an overview for how to setup dynamic routes for mdx content.
+
+### configuration
+
+Like everything else, I want to be able to control the content directories form `config.js`. I also want some granular control over how the arguments are handled. I came up with four different ways of defining content directory/ies, each offering slightly more control than the one prior, but all building on top of one another.
+
+``` js
+content: null // string. defaults to '/content'
+----
+content: '/garden' OR ['content/garden'] // array or string. defaults to `/${folderName}`
+---
+content: ['/garden', '/posts'] // array of strings. each directory produces slugs with `/${folderName}`
+---
+content: [ // multiple directories with options -- array of objects
+    {
+      path: '/garden',
+      inSearch: false,
+      baseSlug: // string or null [default to '${path}'],
+      template: // string or path to template [default to Post],
+      ... // room for future options and extensions
+    }
+  ]
+```
+
+In working this out, I'm trying to provide a good default (even if it's `null`) while offering a way to pass in options and extend the config in the future.
+
+### rethinking structure
+
+Generating static pages in Next.js requires two functions, `getStaticPaths` -- which returns a list of paths -- and `getStaticProps` -- which returns the props for those paths. Because I wanted to be able to define different paths for different content directories, I ended up moving some of the `/pages` folder structure around:
+
+```js
+// before -- nested. vested interest in /garden
+/pages
+|   _app.js
+|   _document.js
+|   index.js
+|   about.js
+└───/garden
+    |   index.js
+    |   [slug].js
+    └───/tags
+        |  [slug].js
+
+//after -- flatter
+/pages
+|   _app.js
+|   _document.js
+|   index.js
+|   about.js
+|   garden.js
+└───/[path]
+    |   [slug].js
+└───/tags
+    |  [slug].js
+```
+
+The documentation for [dynamic routing](https://nextjs.org/docs/routing/dynamic-routes) is helpful here. If I have a general `/content` directory with something like `garden/post-01.mdx` and `notes/note-01.mdx`, `[path]/[slug].js` will use `getStaticPaths` to return an object with `{ path, slug }` corresponding to the directory and file name for each mdx file. This way, I don't need to (and shouldn't) define an explicit `/garden` folder. I can just catch all my posts with the more generalized `[path]/[slug].js`.
+
+### helper functions
+
+Two helper functions for generating routes and pages in `genGarden.js`, which is where all the mdx logic lives. The first is called `getFiles()`.
+
+``` js
+function getFiles(source) {
+  if (Array.isArray(source)) {
+    return source.reduce((acc, src) => {
+      const usePath = src.path || src;
+      const sourcePath = path.join(process.cwd(), usePath);
+      const contentGlob = `${sourcePath}/**/*.mdx`;
+      const files = glob.sync(contentGlob);
+      return [...acc, ...files];
+    }, []);
+  }
+  const sourcePath = path.join(process.cwd(), source);
+  const contentGlob = `${sourcePath}/**/*.mdx`;
+  const files = glob.sync(contentGlob);
+
+  if (!files.length) return [];
+
+  return files;
+}
+```
+
+> => note
+>
+> `source` comes from `@config` -- it's where we define the source of our content. I can be a string, an array of strings, or an array of objects that correspond to where your content lives relative to the project's root.
+
+`getFiles()` takes our `source` and returns an array of files that will be used to generate paths or mdx.
+
+Once we have an array of files, we use the other helper function `getSlug()` to generate the path.
+
+``` js
+function getSlug(filepath, source) {
+  const options = source.find(s => {
+    if (!isObject(s)) return false;
+    return filepath.includes(s.path);
+  });
+  const slug = filepath
+    .replace(/^.*[\\\/]/, '')
+    .replace(new RegExp(`${path.extname(filepath)}$`), '');
+  const slugPath = path.dirname(filepath).replace(/^.*[\\\/]/, '');
+  const useSlug = get(options, 'slug', slugPath);
+
+  return { slug, slugPath: useSlug };
+}
+```
+
+Here, filepath is just the path to the mdx file. `slug` and `slugPath` are exactly what they sound like -- the slug for the page and the path to get there (so something like `garden` or `posts`). The source argument provides extra information about the `slugPath` if we want to override it. The example here would be something like `source = [{ path: 'posts', slug: 'garden' }]` where our content lives in `./posts` but we want the pages to use the `garden` slug when they're generated.
+
+### `getStaticPaths()` and `getStaticProps()`
+
+Back in our `/[path]/[slug].js`, we need to get an array of paths. We call the `getAllPaths()` function, which uses the above helper functions.
+
+``` js
+export async function getAllPaths(source = 'garden') {
+  const files = getFiles(source);
+  const paths = await Promise.all(
+    files.map(async filepath => {
+      const { slug, slugPath } = getSlug(filepath, source);
+
+      return { path: slugPath, slug };
+    })
+  );
+
+  return paths;
+}
+```
+
+Note here that `garden` is set as the fallback source. So, if you don't pass a source argument, it'll expect your content to live in a root folder called `garden`. We're passing in the source information in `/[path]/[slug].js` by grabbing it from `@config.js`:
+
+``` js
+export async function getStaticPaths() {
+  const { content } = siteConfig;
+  const routes = await getAllPaths(content);
+  
+  ...
+}
+```
+
+Now that we have the paths, we can use `getStaticProps()` to return the necessary information for each file and generate the pages. Check out `genGarden.js` to see what that looks like.
+
+### wrapping up
+
+The extendability offered by this structure offers a less opinionated way of defining where your content lives and how it gets generated. Working through this also helped me begin to think through how content related options (indexable, searchable, etc.) might be handled in the future.
+
+### up next
+
+- [x] content directories
+- [ ] fix tag routes (slugify)
+- [ ] templating

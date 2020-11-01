@@ -19,7 +19,7 @@ function Excerpt({ post }) {
   return (
     <PostExcerpt>
       <small>{date}</small>
-      <Link href="/garden/[slug]" as={slug}>
+      <Link href={slug}>
         <h3>{title}</h3>
       </Link>
       <p>{description}</p>

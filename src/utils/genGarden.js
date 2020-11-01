@@ -1,6 +1,8 @@
+/* eslint-disable no-useless-escape */
 import React from 'react';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { get, isObject } from 'lodash';
 import renderToString from 'next-mdx-remote/render-to-string';
 import matter from 'gray-matter';
 import glob from 'fast-glob';
@@ -19,40 +21,58 @@ function getFormattedDate(date) {
   return formattedDate;
 }
 
-export async function getAllPaths(source) {
-  const contentGlob = `${source}/**/*.mdx`;
+function getFiles(source) {
+  if (Array.isArray(source)) {
+    return source.reduce((acc, src) => {
+      const usePath = src.path || src;
+      const sourcePath = path.join(process.cwd(), usePath);
+      const contentGlob = `${sourcePath}/**/*.mdx`;
+      const files = glob.sync(contentGlob);
+      return [...acc, ...files];
+    }, []);
+  }
+  const sourcePath = path.join(process.cwd(), source);
+  const contentGlob = `${sourcePath}/**/*.mdx`;
   const files = glob.sync(contentGlob);
 
   if (!files.length) return [];
 
+  return files;
+}
+
+function getSlug(filepath, source) {
+  const options = source.find(s => {
+    if (!isObject(s)) return false;
+    return filepath.includes(s.path);
+  });
+  const slug = filepath
+    .replace(/^.*[\\\/]/, '')
+    .replace(new RegExp(`${path.extname(filepath)}$`), '');
+  const slugPath = path.dirname(filepath).replace(/^.*[\\\/]/, '');
+  const useSlug = get(options, 'slug', slugPath);
+
+  return { slug, slugPath: useSlug };
+}
+
+export async function getAllPaths(source = 'garden') {
+  const files = getFiles(source);
   const paths = await Promise.all(
     files.map(async filepath => {
-      const slug = filepath
-        .replace(source, '')
-        .replace(/^\/+/, '')
-        .replace(new RegExp(`${path.extname(filepath)}$`), '');
+      const { slug, slugPath } = getSlug(filepath, source);
 
-      return { slug };
+      return { path: slugPath, slug };
     })
   );
 
   return paths;
 }
 
-export async function getAllPosts(source) {
-  const contentGlob = `${source}/**/*.mdx`;
-  const files = glob.sync(contentGlob);
+export async function getAllPosts(source = 'garden') {
+  const files = getFiles(source);
 
-  if (!files.length) return [];
-
-  // 1. get initial content
   const initialContent = await Promise.all(
     files.map(async filepath => {
-      const slug = filepath
-        .replace(source, '')
-        .replace(/^\/+/, '')
-        .replace(new RegExp(`${path.extname(filepath)}$`), '');
-
+      const { slug, slugPath } = getSlug(filepath, source);
       const mdxSource = await fs.readFile(filepath);
       const { content, data } = matter(mdxSource);
       const mdx = await renderToString(content, {
@@ -71,7 +91,7 @@ export async function getAllPosts(source) {
         frontMatter: {
           ...data,
           mentions: [...links],
-          slug: `/garden/${slug}`,
+          slug: `/${slugPath}/${slug}`,
           date: getFormattedDate(new Date(data.date))
         },
         mdx
@@ -80,7 +100,6 @@ export async function getAllPosts(source) {
   );
 
   const allContent = initialContent
-    // 2. sort content
     .sort((a, b) => new Date(b.frontMatter.date) - new Date(a.frontMatter.date))
     .map((curr, idx, arr) => {
       // 3. add next/prev info

@@ -79,7 +79,7 @@ const PaginationWrapper = styled.nav`
   `}
 `;
 
-function Post({ content, frontMatter, mentionedIn }) {
+function Note({ content, frontMatter, mentionedIn }) {
   const { date, description, tags, title, prevPost, nextPost } = frontMatter;
   return (
     <Layout>
@@ -141,14 +141,14 @@ function Post({ content, frontMatter, mentionedIn }) {
   );
 }
 
-Post.propTypes = {
+Note.propTypes = {
   content: PropTypes.object.isRequired,
   frontMatter: PropTypes.object.isRequired,
   mentionedIn: PropTypes.array
 };
 
-Post.defaultProps = {
+Note.defaultProps = {
   mentionedIn: []
 };
 
-export default Post;
+export default Note;

@@ -16,9 +16,9 @@ const Inner = styled.a`
   `}
 `;
 
-function GardenLink({ href, as, children }) {
+function GardenLink({ href, children }) {
   return (
-    <Link href={href} as={as} passHref>
+    <Link href={href} passHref>
       <Inner>{children}</Inner>
     </Link>
   );
@@ -26,12 +26,7 @@ function GardenLink({ href, as, children }) {
 
 GardenLink.propTypes = {
   href: PropTypes.string.isRequired,
-  as: PropTypes.string,
   children: PropTypes.any.isRequired
-};
-
-GardenLink.defaultProps = {
-  as: undefined
 };
 
 export default GardenLink;

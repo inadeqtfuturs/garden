@@ -42,7 +42,7 @@ Initially, I just added the prism NightOwl theme and thought I'd move on, but th
 3. Because garden is meant to be extendable, the syntax highlighting should be as simple as possible so it can be easily overridden
 4. Syntax highlighting and themeing more generally should utilize the minimum viable theme tokens or variables
 
-Thinking about syntax highlighting ultimately opened some space to think a little bit more about colors, theme tokens, and their relation garden as a whole. You can find a post about that [here](/garden/extending-themes);
+Thinking about syntax highlighting ultimately opened some space to think a little bit more about colors, theme tokens, and their relation garden as a whole. You can find a post about that [here](/garden/03-extending-themes);
 
 The approach I ended up taking, which is a design pattern I consistently fall back on, is defaults with fallbacks. To differentiate tokens in a block of code, I needed 6 colors. To accommodate undefined themes in a user config, I'm export a default color object from the theme and using that as a fallback. So now the syntax highlighting will be an extension of the current theme and fills in missing tokens with defaults. The one other thing I wanted to add was a way to define the highlighting theme based on some other theme in the config. An example: I want my syntax highlighting to be derived from the dark theme, no matter what theme is currently being used. This gives us three use cases/scenarios:
 
@@ -92,5 +92,5 @@ Working through this also highlighted the need for a different kind of post -- s
 ### up next
 
 - [x] syntax highlighting
-- [ ] content directories
+- [x] [content directories](/garden/04-content-directories)
 - [ ] templating
