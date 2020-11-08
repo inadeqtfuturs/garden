@@ -7,8 +7,8 @@ import siteConfig from '@config';
 export default function TagIndex({ posts, tag }) {
   return (
     <Layout>
-      <SEO title={`posts tagged ${tag}`} />
-      <h2>posts tagged '{tag}'</h2>
+      <SEO title={`posts tagged ${tag.replace(/-/g, ' ')}`} />
+      <h2>posts tagged '{tag.replace(/-/g, ' ')}'</h2>
       {posts.map(post => (
         <Excerpt post={post} key={post.slug} />
       ))}
@@ -30,16 +30,20 @@ export async function getStaticPaths() {
   const posts = await getAllPosts(content);
   const blogTags = posts.reduce((acc, { frontMatter: { tags } }) => {
     const newTags = tags.reduce((newAcc, tag) => {
-      if (acc.includes(tag)) {
+      const slug = tag
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');
+      if (acc.includes(slug)) {
         return newAcc;
       }
-      return [...newAcc, tag];
+      return [...newAcc, slug];
     }, []);
     return [...acc, ...newTags];
   }, []);
-  const paths = blogTags.map(tag => ({
+  const paths = blogTags.map(slug => ({
     params: {
-      slug: tag
+      slug
     }
   }));
 
@@ -52,7 +56,16 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { slug } }) {
   const { content } = siteConfig;
   const posts = await getAllPosts(content);
-  const blogPosts = posts.filter(post => post.frontMatter.tags.includes(slug));
+  const blogPosts = posts.filter(post =>
+    post.frontMatter.tags
+      .map(t =>
+        t
+          .toLowerCase()
+          .replace(/ /g, '-')
+          .replace(/[^\w-]+/g, '')
+      )
+      .includes(slug)
+  );
 
   if (!blogPosts) {
     // eslint-disable-next-line no-console

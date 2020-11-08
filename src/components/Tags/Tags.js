@@ -24,11 +24,17 @@ function Tags({ tags }) {
   return (
     <Wrapper>
       tags
-      {tags.sort().map(t => (
-        <Tag key={t}>
-          <Link href={`/tags/${t}`}>{t}</Link>
-        </Tag>
-      ))}
+      {tags.sort().map(t => {
+        const slug = t
+          .toLowerCase()
+          .replace(/ /g, '-')
+          .replace(/[^\w-]+/g, '');
+        return (
+          <Tag key={slug}>
+            <Link href={`/tags/${slug}`}>{t}</Link>
+          </Tag>
+        );
+      })}
     </Wrapper>
   );
 }

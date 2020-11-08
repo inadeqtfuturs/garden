@@ -57,10 +57,10 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params: { slug } }) {
+export async function getStaticProps({ params: { path, slug } }) {
   const { content } = siteConfig;
   const posts = await getAllPosts(content);
-  const [blogPost] = posts.filter(post => post.slug === slug);
+  const [blogPost] = posts.filter(post => post.slug === `/${path}/${slug}`);
 
   if (!blogPost) {
     // eslint-disable-next-line no-console

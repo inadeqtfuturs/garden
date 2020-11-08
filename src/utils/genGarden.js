@@ -86,7 +86,7 @@ export async function getAllPosts(source = 'garden') {
 
       return {
         filepath,
-        slug,
+        slug: `/${slugPath}/${slug}`,
         content,
         frontMatter: {
           ...data,
