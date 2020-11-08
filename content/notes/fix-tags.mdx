@@ -1,0 +1,28 @@
+---
+title: fix tags
+author: alex christie
+date: '2020-11-08 06:00:00'
+type: note
+tags:
+  - digital garden
+  - note
+  - tagging
+  - slugify
+description: slugify your tags
+draft: false
+---
+
+If you have tags that are more than one word (digital garden?) you need to slugify your tags.
+
+``` js
+function slugifyTag(tag) {
+  return tag.toLowerCase()
+            .replace(/ /g, '-')
+            .replace(/[^\w-]+/g, '');
+}
+```
+
+### up next
+
+- [x] content directories
+- [ ] templating

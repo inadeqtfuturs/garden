@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Excerpt, Layout, SEO } from '@components';
 import { getAllPosts } from '@utils';
+import { slugifyTag } from '@utils/functions';
 import siteConfig from '@config';
 
 export default function TagIndex({ posts, tag }) {
@@ -30,10 +31,7 @@ export async function getStaticPaths() {
   const posts = await getAllPosts(content);
   const blogTags = posts.reduce((acc, { frontMatter: { tags } }) => {
     const newTags = tags.reduce((newAcc, tag) => {
-      const slug = tag
-        .toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/[^\w-]+/g, '');
+      const slug = slugifyTag(tag);
       if (acc.includes(slug)) {
         return newAcc;
       }
@@ -57,14 +55,7 @@ export async function getStaticProps({ params: { slug } }) {
   const { content } = siteConfig;
   const posts = await getAllPosts(content);
   const blogPosts = posts.filter(post =>
-    post.frontMatter.tags
-      .map(t =>
-        t
-          .toLowerCase()
-          .replace(/ /g, '-')
-          .replace(/[^\w-]+/g, '')
-      )
-      .includes(slug)
+    post.frontMatter.tags.map(t => slugifyTag(t)).includes(slug)
   );
 
   if (!blogPosts) {

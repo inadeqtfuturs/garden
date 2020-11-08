@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from '@components';
+import { slugifyTag } from '@utils/functions';
 
 const Tag = styled.li`
   list-style: none;
@@ -25,10 +26,7 @@ function Tags({ tags }) {
     <Wrapper>
       tags
       {tags.sort().map(t => {
-        const slug = t
-          .toLowerCase()
-          .replace(/ /g, '-')
-          .replace(/[^\w-]+/g, '');
+        const slug = slugifyTag(t);
         return (
           <Tag key={slug}>
             <Link href={`/tags/${slug}`}>{t}</Link>
