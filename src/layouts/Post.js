@@ -53,16 +53,10 @@ const MentionedIn = styled.div`
     }
     margin-bottom: 1rem;
     p {
-      margin: 0.25rem 0 0;
-      font-size: 1rem;
-      line-height: 1.5rem;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      margin: 0;
     }
-    ${theme.lg`
-      p {
-        font-size: 0.75rem;
-        line-height: 1rem;
-      }
-    `}
   `}
 `;
 

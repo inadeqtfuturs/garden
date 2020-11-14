@@ -8,7 +8,12 @@ import { getAllPosts } from '@utils';
 import siteConfig from '@config';
 
 const options = {
-  keys: ['content', 'frontmatter.title', 'frontmatter.tags']
+  keys: [
+    'content',
+    'frontMatter.title',
+    'frontMatter.tags',
+    'frontMatter.description'
+  ]
 };
 
 const StyledInput = styled.input`

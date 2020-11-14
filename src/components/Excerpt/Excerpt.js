@@ -7,6 +7,9 @@ const PostExcerpt = styled.div`
   padding: 1rem 0;
   margin-bottom: 2rem;
   border-radius: 6px;
+  h3 {
+    margin: 0;
+  }
   small {
     text-transform: uppercase;
   }

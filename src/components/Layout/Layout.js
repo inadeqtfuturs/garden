@@ -11,12 +11,13 @@ const ToggleButton = styled.button`
   border: 1px solid;
   ${({ theme }) => css`
     padding: ${theme.space[2]};
-    border-color: ${theme.colors.text};
+    border-color: transparent;
     border-radius: ${theme.radii.button}px;
+    background: ${alpha(theme.colors.text, 0.05)};
     color: ${theme.colors.text};
     &:hover {
       cursor: pointer;
-      background: ${alpha(theme.colors.text, 0.05)};
+      background: ${alpha(theme.colors.text, 0.085)};
     }
   `}
 `;
