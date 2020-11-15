@@ -24,9 +24,7 @@ export default function About() {
         <li>theme-ui - dark/light</li>
         <li>styled-components</li>
         <li>jest/github actions (ci/cd)</li>
-        <li>
-          <strike>storybook (for prototyping/templating)</strike>
-        </li>
+        <li>storybook (for prototyping/templating)</li>
         <li>lint/prettier</li>
       </ul>
     </Layout>
