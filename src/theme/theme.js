@@ -137,10 +137,16 @@ function genTheme({ colors } = { colors: defaultColors }) {
         blockquote: {
           fontSize: 3,
           lineHeight: getLineHeight(baseFontSize, baseLineHeight, [3]),
-          margin: 2,
-          marginLeft: 0,
-          paddingLeft: 3,
-          borderLeft: `2px solid ${colors.primary}`
+          my: 3,
+          mx: 0,
+          padding: 3,
+          border: `1px solid ${colors.primary}`,
+          borderRadius: '6px',
+          backgroundColor: alpha('primary', 0.1),
+          '> p': { margin: 0 },
+          'p+p': {
+            marginTop: 1
+          }
         },
         small: {
           fontFamily: 'heading',
@@ -159,6 +165,7 @@ function genTheme({ colors } = { colors: defaultColors }) {
         },
         pre: {
           py: 3,
+          my: 3,
           borderRadius: '6px',
           color: prismTheme.text,
           backgroundColor: lighten(prismTheme.background, 0.05),
