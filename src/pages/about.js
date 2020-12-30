@@ -27,6 +27,12 @@ export default function About() {
         <li>storybook (for prototyping/templating)</li>
         <li>lint/prettier</li>
       </ul>
+
+      <p>
+        garden is a project by [if](https://github.com/inadeqtfuturs/), a
+        software engineer from chicago. say hi on
+        [twitter](https://twitter.com/speculative_dev)
+      </p>
     </Layout>
   );
 }
