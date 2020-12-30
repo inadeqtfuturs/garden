@@ -29,9 +29,16 @@ export default function About() {
       </ul>
 
       <p>
-        garden is a project by [if](https://github.com/inadeqtfuturs/), a
-        software engineer from chicago. say hi on
-        [twitter](https://twitter.com/speculative_dev)
+        garden is a project by{' '}
+        <a href="https://github.com/inadeqtfuturs/">if</a>, a software engineer
+        in chicago.{' '}
+        <a href="https://twitter.com/speculative_dev">
+          say hi
+          <span role="img" aria-label="waving hand">
+            👋
+          </span>
+          on twitter
+        </a>
       </p>
     </Layout>
   );
