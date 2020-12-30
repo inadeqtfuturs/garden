@@ -1,0 +1,135 @@
+---
+title: generating theme tokens
+author: alex christie
+date: '2020-12-30 06:00:00'
+type: note
+tags:
+  - digital garden
+  - note
+  - tokens
+  - theme
+  - design system
+description: generating theme tokens and falling back to defaults
+draft: false
+---
+
+I'm working on a theme/token generating library based on [theme-ui](https://theme-ui.com/) and [emotion](https://emotion.sh/docs/introduction). I've found myself using some variation of the same theme object across projects, but as I iterate on that object either improving it or tweaking it, I find it increasingly difficult to keep different versions up to parity. An example: I update how I'm using breakpoints in one so I need to go through each project and update the breakpoints there.
+
+One solution would be to publish the theme object as an npm package, but I wanted something a little more dynamic. [speculative fabulation (or sf)](https://github.com/inadeqtfuturs/if-sf) generates theme tokens (ex. colors, typography, buttons) as well as theme objects (ex. an object comprised of theme tokens). These can be passed into `emotion`'s or `styled-components`'s theme provider. `sf` operates on the idea that objects go in, objects come out -- you can extend, merge, or override theme defaults, allowing granular control over the theme you generate:
+
+``` js
+const defaultTheme = genTheme();
+const defaultThemeWithNewColor = genTheme({ colors: { newColor: '#333' } });
+```
+
+Both functions return a full theme object, but you can drill down and update the specific tokens you need.
+
+### token generators
+
+`genTheme()` is broken down into a series of token generators -- functions that return a token object, like colors or styles for a button. In working on these token generators, I set up a few parameters for how they should behave:
+
+0. generator files export a token object
+1. generators return a token object
+2. generators don't require arguments to return the token object
+3. generators merge and extend the token object by default
+4. generators can wholesale override the token object
+
+For something like colors, this is simple enough:
+
+``` js
+import { merge } from 'theme-ui';
+
+const defaultColors = {
+  text: '#111827',
+  background: '#F9FAFB',
+  primary: '#2563EB',
+  secondary: '#DE7283',
+  accent: '#7C3AED',
+  muted: '#88d1FF'
+};
+
+export function genColors({ override, ...restColors } = {}) {
+  if (override) {
+    return override;
+  }
+  if (!restColors) {
+    return defaultColors;
+  }
+  return merge(defaultColors, restColors);
+}
+
+export default defaultColors;
+```
+
+By default, `genColors()` returns `defaultColors`. If we pass an `override` argument, it will return that object instead. Any other key/value pair we pass gets merged into default colors.
+
+### token generators -- deep and defaults
+
+Things became slightly more complicated as I began working with typography. In the past, I've defined a default text base that includes things like font size, line height, and font family, spreading that object into each typographical element (i.e. p, ul, blockquote, etc.) (I'm ultimately leveraging the `theme.styles` object from [theme-ui](https://theme-ui.com/styling-mdx)). This works for the first two generator requirements -- have a base set of styles; spread them into each element, return that:
+
+``` js
+export const defaultTextBase = {
+  fontFamily: 'body',
+  fontSize: ['sm', 'md'],
+  lineHeight: 1.5,
+  margin: 0,
+  padding: 0,
+  marginBottom: 4
+};
+
+const defaultText = {
+  p: {
+    ...defaultTextBase
+  },
+  ul: {
+    ...defaultTextBase,
+    paddingLeft: 8,
+    ul: {
+      margin: 0
+    }
+  },
+  ...
+}
+```
+
+The problem starts when I want to extend or merge styles into the base: if we're just spreading `defaultTextBase` into these elements, at what point do we actually merge or extend the base? One way to solve this would be to iterate through the keys in `defaultText`, spreading the base as we went, but this would prevent us from exporting an object from the generator file. Another way to handle this would be to get a diff between the new base and default base -- after all, we're just extending or merging into it. However, this presents an immediate problem if we're going to wholesale override the base at some point. So I ended up writing a utility that removes the default values (if present) from each element.
+
+``` js
+function removeDefaults(obj, defaultObj) {
+  const defaultKeys = Object.keys(defaultObj);
+
+  // mapObject does what it sounds like: allows us to map the key/value pairs in an object
+  // mapObject = (obj, func) => Object.fromEntries(Object.entries(obj).map(func));
+  return mapObject(obj, ([key, value]) => {
+    const remainingValues = Object.keys(value).reduce((acc, curr) => {
+      if (defaultKeys.includes(curr) && defaultObj[curr] === value[curr]) {
+        return { ...acc };
+      }
+      return { [curr]: value[curr], ...acc };
+    }, {});
+    return [
+      key,
+      {
+        ...remainingValues
+      }
+    ];
+  });
+}
+```
+
+Once the default values are removed, we can determine the new base (overriding, merging into, or extending the default base) and use the above `mapObject` function to pass that base into each key. You can see the full implementation [here](https://github.com/inadeqtfuturs/if-sf/blob/main/src/theme/tokens/text/index.js)
+
+### spread defaults // remove defaults
+
+Something about this pattern seems useful, though I'm not entirely sure where. It goes something like this:
+
+1. Have a default base
+2. Spread that default base into each key of a token object. Export that object.
+3. If you need to extend or override that base, use the above function to remove those defaults
+4. Return new object using new base
+
+I like this pattern, though I think it fits a specific use case. I do think it could be used in a more generalized way, and I'd be interested to hear alternative approaches to the above problem.
+
+### up next
+
+- [ ] templating
