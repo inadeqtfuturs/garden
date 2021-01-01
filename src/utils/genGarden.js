@@ -1,8 +1,6 @@
-/* eslint-disable no-useless-escape */
 import React from 'react';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { get, isObject } from 'lodash';
 import renderToString from 'next-mdx-remote/render-to-string';
 import matter from 'gray-matter';
 import glob from 'fast-glob';
@@ -17,62 +15,46 @@ const components = {
 
 function getFormattedDate(date) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  const formattedDate = date.toLocaleDateString('en-US', options);
-  return formattedDate;
+  return date.toLocaleDateString('en-US', options);
 }
 
-function getFiles(source) {
-  if (Array.isArray(source)) {
-    return source.reduce((acc, src) => {
-      const usePath = src.path || src;
-      const sourcePath = path.join(process.cwd(), usePath);
-      const contentGlob = `${sourcePath}/**/*.mdx`;
-      const files = glob.sync(contentGlob);
-      return [...acc, ...files];
-    }, []);
-  }
-  const sourcePath = path.join(process.cwd(), source);
-  const contentGlob = `${sourcePath}/**/*.mdx`;
-  const files = glob.sync(contentGlob);
+function returnGlobInfo(usePath, route = null) {
+  const sourcePath = path.join(process.cwd(), usePath);
+  const newGlob = glob.sync(`${sourcePath}/**/*.mdx`);
+  return newGlob.map(filepath => {
+    const pathAndSlug = filepath
+      .replace(new RegExp(`${path.extname(filepath)}$`), '')
+      .split('/')
+      .slice(-2);
+    return { filepath, path: route || pathAndSlug[0], slug: pathAndSlug[1] };
+  });
+}
+
+export function getFilePathInfo(source) {
+  const files = Array.isArray(source)
+    ? source.reduce((acc, src) => {
+        const srcPath = src.path || src;
+        const route = src.slug || null;
+        const filesFromPath = returnGlobInfo(srcPath, route);
+        return [...acc, ...filesFromPath];
+      }, [])
+    : returnGlobInfo(source);
 
   if (!files.length) return [];
 
   return files;
 }
 
-function getSlug(filepath, source) {
-  const options = source.find(s => {
-    if (!isObject(s)) return false;
-    return filepath.includes(s.path);
-  });
-  const slug = filepath
-    .replace(/^.*[\\\/]/, '')
-    .replace(new RegExp(`${path.extname(filepath)}$`), '');
-  const slugPath = path.dirname(filepath).replace(/^.*[\\\/]/, '');
-  const useSlug = get(options, 'slug', slugPath);
-
-  return { slug, slugPath: useSlug };
-}
-
 export async function getAllPaths(source = 'garden') {
-  const files = getFiles(source);
-  const paths = await Promise.all(
-    files.map(async filepath => {
-      const { slug, slugPath } = getSlug(filepath, source);
-
-      return { path: slugPath, slug };
-    })
-  );
-
+  const paths = await getFilePathInfo(source);
   return paths;
 }
 
 export async function getAllPosts(source = 'garden') {
-  const files = getFiles(source);
+  const files = getFilePathInfo(source);
 
-  const initialContent = await Promise.all(
-    files.map(async filepath => {
-      const { slug, slugPath } = getSlug(filepath, source);
+  const allContent = await Promise.all(
+    files.map(async ({ filepath, path: slugPath, slug }) => {
       const mdxSource = await fs.readFile(filepath);
       const { content, data } = matter(mdxSource);
       const mdx = await renderToString(content, {
@@ -82,7 +64,7 @@ export async function getAllPosts(source = 'garden') {
         },
         scope: data
       });
-      const links = markdownLinkExtractor(content);
+      const links = markdownLinkExtractor(content).filter(l => l[0] === '/');
 
       return {
         filepath,
@@ -97,29 +79,31 @@ export async function getAllPosts(source = 'garden') {
         mdx
       };
     })
+  ).then(response =>
+    response
+      .sort(
+        (a, b) => new Date(b.frontMatter.date) - new Date(a.frontMatter.date)
+      )
+      .map((curr, idx, arr) => {
+        // add next/prev info
+        const nextPost = arr[idx - 1] ? arr[idx - 1].frontMatter : null;
+        const prevPost = arr[idx + 1] ? arr[idx + 1].frontMatter : null;
+        // add mentionedIn to frontMatter
+        const mentionedIn = arr.filter(post => {
+          return post.frontMatter.mentions.includes(curr.frontMatter.slug);
+        });
+        const { frontMatter } = curr;
+        return {
+          ...curr,
+          frontMatter: {
+            ...frontMatter,
+            mentionedIn,
+            nextPost,
+            prevPost
+          }
+        };
+      })
   );
-
-  const allContent = initialContent
-    .sort((a, b) => new Date(b.frontMatter.date) - new Date(a.frontMatter.date))
-    .map((curr, idx, arr) => {
-      // 3. add next/prev info
-      const nextPost = arr[idx - 1] ? arr[idx - 1].frontMatter : null;
-      const prevPost = arr[idx + 1] ? arr[idx + 1].frontMatter : null;
-      // 4. add mentionedIn to frontMatter
-      const mentionedIn = arr.filter(post => {
-        return post.frontMatter.mentions.includes(curr.frontMatter.slug);
-      });
-      const { frontMatter } = curr;
-      return {
-        ...curr,
-        frontMatter: {
-          ...frontMatter,
-          mentionedIn,
-          nextPost,
-          prevPost
-        }
-      };
-    });
 
   return allContent;
 }

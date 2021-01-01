@@ -11,27 +11,28 @@ const components = {
   code: props => <Code {...props} />
 };
 
+function getComponent(type) {
+  if (type === 'note') {
+    return Note;
+  }
+  if (type === 'post') {
+    return Post;
+  }
+  return Post;
+}
+
 export default function GardenPost({ mdxSource, frontMatter }) {
   const { mentionedIn, type } = frontMatter;
   const content = hydrate(mdxSource, { components });
 
+  const Component = getComponent(type);
+
   return (
-    <>
-      {type === 'note' && (
-        <Note
-          content={content}
-          frontMatter={frontMatter}
-          mentionedIn={mentionedIn}
-        />
-      )}
-      {type === 'post' && (
-        <Post
-          content={content}
-          frontMatter={frontMatter}
-          mentionedIn={mentionedIn}
-        />
-      )}
-    </>
+    <Component
+      content={content}
+      frontMatter={frontMatter}
+      mentionedIn={mentionedIn}
+    />
   );
 }
 
