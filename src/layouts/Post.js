@@ -36,9 +36,11 @@ const LinkWrapper = styled.div`
       padding: ${theme.space[3]};
       border-radius: 6px;
       background-color: ${alpha(theme.colors.text, 0.05)};
+      border: 1px solid transparent;
     }
     a:hover {
       background-color: ${alpha(theme.colors.primary, 0.2)};
+      border: 1px solid ${theme.colors.primary};
     }
   `}
 `;
@@ -48,8 +50,10 @@ const MentionedIn = styled.div`
     padding: ${theme.space[3]};
     border-radius: 6px;
     background-color: ${alpha(theme.colors.text, 0.05)};
+    border: 1px solid transparent;
     &:hover {
-      background-color: ${alpha(theme.colors.primary, 0.2)};
+      background: ${alpha(theme.colors.primary, 0.2)};
+      border: 1px solid ${theme.colors.primary};
     }
     margin-bottom: 1rem;
     p {
