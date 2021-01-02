@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { alpha, lighten } from '@theme-ui/color';
+import { alpha } from '@theme-ui/color';
 import { Link } from '@components';
 import { slugifyTag } from '@utils/functions';
 
