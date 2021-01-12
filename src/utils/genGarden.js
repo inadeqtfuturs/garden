@@ -5,6 +5,8 @@ import renderToString from 'next-mdx-remote/render-to-string';
 import matter from 'gray-matter';
 import glob from 'fast-glob';
 import markdownLinkExtractor from 'markdown-link-extractor';
+import remarkAutolinkHeadings from 'remark-autolink-headings';
+import remarkSlug from 'remark-slug';
 import { Code } from '@components';
 import parseGarden from './parseGarden';
 
@@ -60,7 +62,7 @@ export async function getAllPosts(source = 'garden') {
       const mdx = await renderToString(content, {
         components,
         mdxOptions: {
-          remarkPlugins: [parseGarden]
+          remarkPlugins: [remarkSlug, remarkAutolinkHeadings, parseGarden]
         },
         scope: data
       });

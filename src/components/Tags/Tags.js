@@ -8,9 +8,9 @@ import { slugifyTag } from '@utils/functions';
 const Tag = styled.li`
   list-style: none;
   a {
-    border: 1px solid transparent;
     margin-right: 0.25rem;
     padding: 0.25rem;
+    border: 1px solid transparent;
     border-radius: 6px;
     ${({ theme }) => css`
       background-color: ${alpha(theme.colors.text, 0.05)};

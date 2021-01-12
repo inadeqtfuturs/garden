@@ -1,0 +1,108 @@
+---
+title: remark generated table of contents
+author: alex christie
+date: '2021-01-12 06:00:00'
+type: note
+tags:
+  - digital garden
+  - note
+  - authoring
+  - remark
+  - table of contents
+description: generating a table of contents for markdown posts
+draft: false
+---
+
+I spent some time this weekend updating a remark utility I wrote a while back. I wanted to add an 'overview' section to the beginning of every post -- basically a table of contents generated from post headers. There's a great little plugin that does this called [`remark-toc`](https://github.com/remarkjs/remark-toc), which uses `mdast-util-toc` to do just this. It did present a few problems for my workflow:
+
+1. It requires you to define where the table of contents went in the markdown. For other folks, I'm sure this is a useful feature, but I didn't want to have to bother.
+2. It removed all content between between the table of contents and the first header. Again, maybe not a problem for some folks, but I often have an introductory section that lacks a header.
+
+Because of this, I ended up spinning up a custom implementation of `mdast-util-toc`.
+
+### remark plugin
+
+The [`unified`](https://github.com/unifiedjs/unified) ecosystem has a fairly robust language for describing itself. At it's core, '**unified** is an interface for processing text using syntax trees' (unified documentation). For our purposes, we can think of it this way:
+
+- we have an `.mdx` or `.md` file
+- it is run through a `parser` and converted into a syntax tree
+- that syntax tree can be transformed by any number of plugins or `transformers`
+- the new syntax tree is run through a `compiler` and output as html
+
+We want to write a plugin that returns a `transformer` that modifies our syntax tree. A really basic version would look like this:
+
+``` js
+module.exports = parse;
+
+function parse(options = {}) {
+  return transformer;
+
+  function transformer(tree) {
+    // modify tree here
+  }
+}
+```
+
+We can pass this module to the `remarkPlugins` argument of `renderToString` to transform the tree.
+
+### generating overview section
+
+We'll update the above generic `parse` function to use `mdast-util-toc`, which does the heavy lifting of generating a list of headers with relevant links. `mdast-util-toc` returns a [node](https://github.com/syntax-tree/unist#node) with a `type` of `list` that we can pass to the `children` array of the syntax tree. If that `node` is returned, we'll update the `children` array in the syntax tree so the map comes first.
+
+``` js
+const tocUtil = require('mdast-util-toc');
+
+module.exports = parse;
+
+function parse(options = {}) {
+  return transformer;
+
+  function transformer(tree) {
+    const { map } = tocUtil(tree);
+    if (map) {
+      tree.children = [].concat(map, tree.children)
+    }
+  }
+}
+```
+
+This works, however, I want to generate a `div` with the class-name `toc` that includes both this table of contents as well as an `overview` heading. We'll need to generate this [`parent` node](https://github.com/syntax-tree/unist#parent) as well as the header node. I wrote up a really generic function for this:
+
+``` js
+const genOverview = map => {
+  const header = {
+    type: 'heading',
+    depth: 3,
+    children: [{ type: 'text', value: 'overview' }]
+  };
+
+  return {
+    type: 'parent',
+    children: [header, map],
+    data: {
+      hProperties: { className: 'toc' }
+    }
+  };
+};
+```
+
+And update the `transformer` function:
+
+``` js
+const { map } = tocUtil(tree);
+if (map) {
+  const overview = genOverview(map);
+  tree.children = [].concat(overview, tree.children);
+}
+```
+
+While not the most exciting thing in the world, this should offer a brief overview for thinking about handling syntax tress. Looking forward to doing more in the future.
+
+### resources
+
+- [unified documentation](https://github.com/unifiedjs/unified)
+- [remark plugin documentation](https://github.com/unifiedjs/unified#plugin)
+
+### up next
+
+- [ ] templating

@@ -202,6 +202,20 @@ function genTheme({ colors } = { colors: defaultColors }) {
           backgroundColor: alpha(colors.secondary, 0.15),
           p: '1px 2px',
           borderRadius: '3px'
+        },
+        '.toc': {
+          backgroundColor: alpha(colors.text, 0.05),
+          padding: [2, 2, 3],
+          borderRadius: ['6px', '6px', '12px'],
+          marginBottom: 3,
+          h3: {
+            marginBottom: 0
+          },
+          ul: {
+            paddingLeft: 1,
+            listStyle: 'none',
+            m: 0
+          }
         }
       }
     }
