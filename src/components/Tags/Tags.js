@@ -8,7 +8,6 @@ import { slugifyTag } from '@utils/functions';
 const Tag = styled.li`
   list-style: none;
   a {
-    margin-right: 0.25rem;
     padding: 0.25rem;
     border: 1px solid transparent;
     border-radius: 6px;
@@ -25,6 +24,8 @@ const Tag = styled.li`
 
 const Wrapper = styled.ul`
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem 0.25rem;
   padding: 0;
   margin: 0;
 `;
