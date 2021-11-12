@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { MDXRemote } from 'next-mdx-remote';
 import { alpha } from '@theme-ui/color';
 import { Layout, Link, SEO, Tags } from '@components';
 
@@ -77,8 +78,8 @@ const PaginationWrapper = styled.nav`
   `}
 `;
 
-function Post({ content, frontMatter, mentionedIn }) {
-  const { date, description, tags, title, prevPost, nextPost } = frontMatter;
+function Post({ components, content, frontmatter, mentionedIn }) {
+  const { date, description, tags, title, prevPost, nextPost } = frontmatter;
   return (
     <Layout>
       <SEO title={title} description={description} />
@@ -88,20 +89,22 @@ function Post({ content, frontMatter, mentionedIn }) {
         <Tags tags={tags} />
       </Header>
       <Article>
-        <div>{content}</div>
+        <div>
+          <MDXRemote {...content} components={components} />
+        </div>
         <MentionedWrapper>
           {mentionedIn && (
             <>
               <h3>mentioned in</h3>
               {mentionedIn.map(
                 ({
-                  frontMatter: {
-                    slug,
+                  frontmatter: {
                     title: mentionedTitle,
                     description: mentionedDescription
-                  }
+                  },
+                  params: { slug }
                 }) => (
-                  <Link href={slug} key={slug}>
+                  <Link href={`/${slug.join('/')}`} key={slug}>
                     <MentionedIn>
                       <h5>{mentionedTitle}</h5>
                       <p>{mentionedDescription}</p>
@@ -140,12 +143,14 @@ function Post({ content, frontMatter, mentionedIn }) {
 }
 
 Post.propTypes = {
+  components: PropTypes.object,
   content: PropTypes.object.isRequired,
-  frontMatter: PropTypes.object.isRequired,
+  frontmatter: PropTypes.object.isRequired,
   mentionedIn: PropTypes.array
 };
 
 Post.defaultProps = {
+  components: {},
   mentionedIn: []
 };
 

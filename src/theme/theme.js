@@ -175,9 +175,10 @@ function genTheme({ colors } = { colors: defaultColors }) {
           '.selector,.attr-name,.string,.char,.builtin,.inserted': {
             color: prismTheme.primary
           },
-          '.property,.tag,.boolean,.number,.constant,.symbol,.deleted,.regex,.important,.variable': {
-            color: colors.secondary
-          },
+          '.property,.tag,.boolean,.number,.constant,.symbol,.deleted,.regex,.important,.variable':
+            {
+              color: colors.secondary
+            },
           '.comment,.prolog,.doctype,.cdata,.imports,.function,.class-name': {
             color: prismTheme.muted
           },

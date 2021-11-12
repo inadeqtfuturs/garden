@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components": [
+        "src/components"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@config": [
+        "src/config"
+      ],
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@layouts": [
+        "src/layouts"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@mdx": [
+        "next-mdx-relations.config.js"
+      ],
+      "@theme": [
+        "src/theme"
+      ],
+      "@theme/*": [
+        "src/theme/*"
+      ],
+      "@utils": [
+        "src/utils"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
+    }
+  }
+}

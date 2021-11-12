@@ -4,15 +4,14 @@ import Fuse from 'fuse.js';
 import { debounce } from 'lodash';
 import styled, { css } from 'styled-components';
 import { Excerpt, Layout, SEO } from '@components';
-import { getAllPosts } from '@utils';
-import siteConfig from '@config';
+import { getPages } from '@mdx';
 
 const options = {
   keys: [
     'content',
-    'frontMatter.title',
-    'frontMatter.tags',
-    'frontMatter.description'
+    'frontmatter.title',
+    'frontmatter.tags',
+    'frontmatter.description'
   ]
 };
 
@@ -61,7 +60,7 @@ function Garden({ posts }) {
         onChange={updateSearchVal}
       />
       {postState.map(post => (
-        <Excerpt post={post} key={post.slug} />
+        <Excerpt post={post} key={post.filepath} />
       ))}
     </Layout>
   );
@@ -72,8 +71,7 @@ Garden.propTypes = {
 };
 
 export async function getStaticProps() {
-  const { content } = siteConfig;
-  const posts = await getAllPosts(content);
+  const posts = await getPages();
 
   return {
     props: {

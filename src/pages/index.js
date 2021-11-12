@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Excerpt, Layout, SEO } from '@components';
-import { getAllPosts } from '@utils';
-import siteConfig from '@config';
+import { getPages } from '@mdx';
 
 export default function Home({ recentPosts }) {
   return (
@@ -53,7 +52,7 @@ export default function Home({ recentPosts }) {
       <div>
         <h2>recent posts</h2>
         {recentPosts.map(post => (
-          <Excerpt post={post} key={post.slug} />
+          <Excerpt post={post} key={post.filePath} />
         ))}
       </div>
     </Layout>
@@ -69,9 +68,8 @@ Home.defaultProps = {
 };
 
 export async function getStaticProps() {
-  const { content } = siteConfig;
-  const posts = await getAllPosts(content);
-  const recentPosts = posts.slice(0, 4);
+  const pages = await getPages();
+  const recentPosts = pages.slice(0, 4);
   return {
     props: {
       recentPosts

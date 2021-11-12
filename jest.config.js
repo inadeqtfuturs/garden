@@ -1,6 +1,6 @@
 module.exports = {
   transform: {
-    '^.+\\.(js|jsx)$': 'babel-jest'
+    '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './.test/babel.config.js' }]
   },
   moduleNameMapper: {
     '^@components(.*)$': '<rootDir>/src/components$1',

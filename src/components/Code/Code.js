@@ -21,7 +21,7 @@ function Code({ children, className }) {
       }) => (
         <pre
           className={highlightClassName}
-          style={{ ...style, padding: '20px' }}
+          style={{ ...style, padding: '20px', wordBreak: 'break-word' }}
         >
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>

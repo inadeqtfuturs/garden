@@ -1,0 +1,35 @@
+---
+title: 05 - updating garden to next-mdx-relations
+author: alex christie
+date: '2021-11-12'
+type: post
+tags:
+  - digital garden
+  - documentation
+  - feature implementation
+  - next-mdx-relations
+  - nextjs
+description: updating the undergirding functionality of garden to use `next-mdx-relations` 
+draft: true
+---
+
+When I initially made `garden`, the idea was that boilerplating a site was easier than writing up its underlying functionality. Boilerplate exposes more control to users -- you can literally rip out and implement whatever you need to. However, the undergirding feature of `garden` was its ability to help users quickly spin up something like a blog using Next.js and markdown. The vast majority of this functionality has been abstracted into a library I wrote a few months ago called [`next-mdx-relations`](https://github.com/inadeqtfuturs/next-mdx-relations). `garden` now runs on `next-mdx-relations` and has been updated to Next 12.
+
+### minor changes
+
+You can find all of the documentation for `next-mdx-relations` on github. The biggest two changes are the configuration file and the catch all route.
+
+Configuration can be found at `next-mdx-relations.config.js` and it's been aliased to `@mdx` for convenience. In this file, you can set your content directory, generate relations between and within markdown files, and add remark and rehype plugins as needed. You can find a longer discussion in a blog post [here](https://www.inadequatefutures.com/garden/08-next-mdx-relations).
+
+I've also removed the `[path]/[slug]` route in favor of a catchall `[...slug].js` route. This allows for deeper nesting, more granular control over routes, and an overall easier experience when creating multiple routes that rely on `next-mdx-relations`. You can find documentation for catchall slugs [here](https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes). One note is that the `[tags]/[slug]` route remains. This allows us to generate those pages using `getPathsByProp` outside of the logic of the catchall route. 
+
+### wrapping up
+
+This update shouldn't cause any breaking changes. The babel config used to jest has been moved to `.test/babel.config.js`, but otherwise everything should be the same.
+
+Given more time, I'd like to continue updating both `garden` and `next-mdx-relations` in tandem, and templating should be next on the agenda.
+
+### up next
+
+- [x] upgrade to `next-mdx-relations`
+- [ ] templating

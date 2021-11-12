@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@components';
-import { ThemeRender } from '@utils';
+import ThemeRender from '@utils/testing';
 
 describe('Button', () => {
   it('renders correctly', () => {
