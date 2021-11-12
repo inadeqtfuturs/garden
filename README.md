@@ -33,9 +33,9 @@ deploy with vercel or netlify
 - [x] dark/light theme
 - [x] search
 - [x] syntax highlighting
+- [x] storybook
 - [ ] multiple content directories
 - [ ] specify layout through frontmatter
-- [ ] storybook
 - [ ] roam style backlinks
 - [ ] link preview
 - [ ] last updated

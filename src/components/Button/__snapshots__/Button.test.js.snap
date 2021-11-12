@@ -2,7 +2,7 @@
 
 exports[`Button can be disabled 1`] = `
 <button
-  className="Button__StyledButton-rouxfp-0 jePagS"
+  className="Button__StyledButton-sc-rouxfp-0 dFIsDi"
   color="primary"
   disabled={true}
   onClick={[Function]}
@@ -15,7 +15,7 @@ exports[`Button can be disabled 1`] = `
 
 exports[`Button renders correctly 1`] = `
 <button
-  className="Button__StyledButton-rouxfp-0 itdQun"
+  className="Button__StyledButton-sc-rouxfp-0 kzTaGv"
   color="primary"
   disabled={false}
   onClick={[Function]}
@@ -28,7 +28,7 @@ exports[`Button renders correctly 1`] = `
 
 exports[`Button takes props 1`] = `
 <button
-  className="Button__StyledButton-rouxfp-0 czpEIk"
+  className="Button__StyledButton-sc-rouxfp-0 juTlWk"
   color="secondary"
   disabled={false}
   onClick={[Function]}

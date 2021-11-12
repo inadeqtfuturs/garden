@@ -7,6 +7,9 @@ module.exports = {
     jest: true,
     node: true
   },
+  parserOptions: {
+    ecmaVersion: 2020
+  },
   root: true,
   rules: {
     'jsx-a11y/href-no-hash': ['off'],
@@ -41,9 +44,15 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      'babel-module': {},
       alias: {
-        map: [['@components', './packages/components/src']],
+        map: [
+          ['@components', './src/components'],
+          ['@config', './src/config'],
+          ['@layouts', './src/layouts'],
+          ['@mdx', './next-mdx-relations.config.js'],
+          ['@theme', './src/theme'],
+          ['@utils', './src/utils']
+        ],
         extensions: ['.ts', '.js', '.jsx', '.json']
       }
     }

@@ -7,6 +7,7 @@
 - run `yarn dev` for development
 - `yarn test` for jest testing
 - `yarn lint` for linting
+- `yarn stories` for storybook
 
 deploy to netlify or vercel. use `yarn build`
 

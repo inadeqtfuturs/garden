@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Excerpt, Layout, SEO } from '@components';
-import { getAllPosts } from '@utils';
-import { slugifyTag } from '@utils/functions';
-import siteConfig from '@config';
+import { getPages, getPathsByProp } from '@mdx';
 
 export default function TagIndex({ posts, tag }) {
   return (
@@ -27,46 +25,34 @@ TagIndex.defaultProps = {
 };
 
 export async function getStaticPaths() {
-  const { content } = siteConfig;
-  const posts = await getAllPosts(content);
-  const blogTags = posts.reduce((acc, { frontMatter: { tags } }) => {
-    const newTags = tags.reduce((newAcc, tag) => {
-      const slug = slugifyTag(tag);
-      if (acc.includes(slug)) {
-        return newAcc;
-      }
-      return [...newAcc, slug];
-    }, []);
-    return [...acc, ...newTags];
-  }, []);
-  const paths = blogTags.map(slug => ({
-    params: {
-      slug
-    }
-  }));
+  const paths = await getPathsByProp('frontmatter.tags');
+  const test = paths.map(p => ({ params: { slug: p } }));
 
   return {
-    paths,
+    paths: test,
     fallback: false
   };
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const { content } = siteConfig;
-  const posts = await getAllPosts(content);
-  const blogPosts = posts.filter(post =>
-    post.frontMatter.tags.map(t => slugifyTag(t)).includes(slug)
-  );
+  const tagNoDash = slug.replace('-', ' ');
+  const posts = await getPages({
+    frontmatter: { draft: null, tags: slug }
+  });
+  const postsNoDash = await getPages({
+    frontmatter: { draft: null, tags: tagNoDash }
+  });
 
-  if (!blogPosts) {
-    // eslint-disable-next-line no-console
-    console.warn(`No content found for tag ${slug}`);
-  }
+  const allPosts = [...posts, ...postsNoDash];
+
+  const uniquePosts = Array.from(
+    new Set(allPosts.map(a => a?.frontmatter?.title))
+  ).map(d => allPosts.find(p => p?.frontmatter?.title === d));
 
   return {
     props: {
-      posts: blogPosts,
-      tag: slug
+      tag: slug,
+      posts: uniquePosts
     }
   };
 }

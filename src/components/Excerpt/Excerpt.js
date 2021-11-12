@@ -17,12 +17,13 @@ const PostExcerpt = styled.div`
 
 function Excerpt({ post }) {
   const {
-    frontMatter: { title, date, description, slug, tags }
+    frontmatter: { title, date, description, tags },
+    params: { slug }
   } = post;
   return (
     <PostExcerpt>
       <small>{date}</small>
-      <Link href={slug}>
+      <Link href={`/${slug.join('/')}`} passHef>
         <h3>{title}</h3>
       </Link>
       <p>{description}</p>
@@ -33,12 +34,14 @@ function Excerpt({ post }) {
 
 Excerpt.propTypes = {
   post: PropTypes.shape({
-    frontMatter: PropTypes.shape({
+    frontmatter: PropTypes.shape({
       title: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
       tags: PropTypes.array.isRequired
+    }).isRequired,
+    params: PropTypes.shape({
+      slug: PropTypes.array.isRequired
     }).isRequired
   }).isRequired
 };
