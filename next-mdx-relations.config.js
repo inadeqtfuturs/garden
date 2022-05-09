@@ -12,8 +12,10 @@ export const { getPaths, getPages, getPageProps, getPathsByProp } = createUtils(
       order: 'asc'
     },
     metaGenerators: {
-      mentions: node =>
-        markdownLinkExtractor(node.content).filter(l => l[0] === '/')
+      mentions: node => {
+        const links = markdownLinkExtractor(node.content)?.links;
+        return links.filter(l => l[0] === '/');
+      }
     },
     relationGenerators: {
       mentionedIn: nodes => {
