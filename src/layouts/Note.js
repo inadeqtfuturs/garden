@@ -126,22 +126,18 @@ function Note({ components, content, frontmatter, mentionedIn }) {
       <PaginationWrapper>
         <LinkWrapper>
           {prevPost && (
-            <>
-              <Link href={prevPost.slug} key={prevPost.slug}>
-                <small>previous post</small>
-                {prevPost.title}
-              </Link>
-            </>
+            <Link href={prevPost.slug} key={prevPost.slug}>
+              <small>previous post</small>
+              {prevPost.title}
+            </Link>
           )}
         </LinkWrapper>
         <LinkWrapper>
           {nextPost && (
-            <>
-              <Link href={nextPost.slug} key={nextPost.slug}>
-                <small>next post</small>
-                {nextPost.title}
-              </Link>
-            </>
+            <Link href={nextPost.slug} key={nextPost.slug}>
+              <small>next post</small>
+              {nextPost.title}
+            </Link>
           )}
         </LinkWrapper>
       </PaginationWrapper>

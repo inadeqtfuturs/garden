@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import pick from 'lodash/pick';
+
 import { Excerpt, Layout, SEO } from '@components';
 import { getPages } from '@mdx';
 
@@ -67,9 +69,18 @@ Home.defaultProps = {
   recentPosts: []
 };
 
+const whitelist = ['frontmatter', 'params', 'filePath'];
+
 export async function getStaticProps() {
   const pages = await getPages();
-  const recentPosts = pages.slice(0, 4);
+  const recentPosts = pages
+    .sort(
+      ({ frontmatter: { date: a } }, { frontmatter: { date: b } }) =>
+        new Date(b) - new Date(a)
+    )
+    .slice(0, 4)
+    .map(p => pick(p, whitelist));
+
   return {
     props: {
       recentPosts
