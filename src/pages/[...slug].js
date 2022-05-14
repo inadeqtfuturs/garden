@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Note, Post } from '@layouts';
 import { Code } from '@components';
@@ -21,7 +21,7 @@ function getComponent(type) {
 
 export default function GardenPost({ frontmatter, mdx, meta }) {
   const { type } = frontmatter;
-  const Component = getComponent(type);
+  const Component = useMemo(() => getComponent(type), [frontmatter]);
 
   return (
     <Component

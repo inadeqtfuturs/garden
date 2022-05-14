@@ -1,10 +1,16 @@
-const visit = require('unist-util-visit');
+import visit from 'unist-util-visit';
 
-module.exports = () => tree => {
-  visit(tree, 'element', node => {
-    const { tagName } = node;
-    if (tagName !== 'blockquote');
-  });
+function parse() {
+  function blockquote(tree) {
+    visit(tree, 'element', node => {
+      const { tagName } = node;
+      if (tagName !== 'blockquote');
+    });
 
-  return tree;
-};
+    return tree;
+  }
+
+  return blockquote;
+}
+
+export default parse;

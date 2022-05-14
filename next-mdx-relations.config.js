@@ -13,21 +13,17 @@ export const { getPaths, getPages, getPageProps, getPathsByProp } = createUtils(
     },
     metaGenerators: {
       mentions: node => {
-        const links = markdownLinkExtractor(node.content)?.links;
+        const links = markdownLinkExtractor(node.content);
         return links.filter(l => l[0] === '/');
       }
     },
     relationGenerators: {
       mentionedIn: nodes => {
-        return nodes.map(node => ({
-          ...node,
-          meta: {
-            ...node.meta,
-            mentionedIn: nodes.filter(n =>
-              n.meta?.mentions.includes(`/${node.params.slug.join('/')}`)
-            )
-          }
-        }));
+        return nodes.map(node => {
+          return nodes.filter(n =>
+            n.meta?.mentions.includes(`/${node.params.slug.join('/')}`)
+          );
+        });
       }
     },
     mdxOptions: {

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { ThemeProvider as UIThemeProvider } from 'theme-ui';
 import { defaultColors, genTheme, ThemeContext } from '@theme';
@@ -22,19 +22,18 @@ const modeList = {
 export default function MyApp({ Component, pageProps }) {
   const [currentMode, setMode] = useState('default');
   const { modes, modeThemes } = modeList;
-  const toggleMode = () => {
+  const toggleMode = useCallback(() => {
     const index = modes.indexOf(currentMode);
     const next = modes[(index + 1) % modes.length];
     setMode(next);
-  };
+  });
+  const providerValue = useMemo(() => ({
+    currentMode,
+    toggleMode
+  }));
 
   return (
-    <ThemeContext.Provider
-      value={{
-        currentMode,
-        toggleMode
-      }}
-    >
+    <ThemeContext.Provider value={providerValue}>
       <ThemeProvider theme={modeThemes[modes.indexOf(currentMode)]}>
         <UIThemeProvider theme={modeThemes[modes.indexOf(currentMode)]}>
           <Global />
