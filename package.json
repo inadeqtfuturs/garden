@@ -33,6 +33,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "remark-autolink-headings": "^7.0.1",
+    "remark-gfm": "^3.0.1",
     "remark-slug": "^7.0.1",
     "styled-components": "^5.3.5",
     "styled-system": "^5.1.5",

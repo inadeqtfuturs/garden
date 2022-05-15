@@ -1,6 +1,7 @@
 import markdownLinkExtractor from 'markdown-link-extractor';
 import remarkSlug from 'remark-slug';
 import remarkAutolinkHeadings from 'remark-autolink-headings';
+import remarkGfm from 'remark-gfm';
 import pick from 'lodash/pick';
 
 import { createUtils } from 'next-mdx-relations';
@@ -43,7 +44,12 @@ export const { getPaths, getPages, getPageProps, getPathsByProp } = createUtils(
       }
     },
     mdxOptions: {
-      remarkPlugins: [remarkSlug, remarkAutolinkHeadings, parseGarden]
+      remarkPlugins: [
+        remarkSlug,
+        remarkAutolinkHeadings,
+        parseGarden,
+        remarkGfm
+      ]
     }
   }
 );
