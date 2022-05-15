@@ -28,6 +28,7 @@ export default function GardenPost({ frontmatter, mdx, meta }) {
       components={components}
       content={mdx}
       frontmatter={frontmatter}
+      meta={meta}
       mentionedIn={meta?.mentionedIn}
     />
   );

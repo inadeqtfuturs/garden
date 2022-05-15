@@ -78,8 +78,9 @@ const PaginationWrapper = styled.nav`
   `}
 `;
 
-function Post({ components, content, frontmatter, mentionedIn }) {
-  const { date, description, tags, title, prevPost, nextPost } = frontmatter;
+function Post({ components, content, frontmatter, mentionedIn, meta }) {
+  const { date, description, tags, title } = frontmatter;
+  const { prev, next } = meta;
   return (
     <Layout>
       <SEO title={title} description={description} />
@@ -118,18 +119,24 @@ function Post({ components, content, frontmatter, mentionedIn }) {
       </Article>
       <PaginationWrapper>
         <LinkWrapper>
-          {prevPost && (
-            <Link href={prevPost.slug} key={prevPost.slug}>
-              <small>previous post</small>
-              {prevPost.title}
+          {next && (
+            <Link
+              href={`/${next.params.slug.join('/')}`}
+              key={`/${next.params.slug.join('/')}`}
+            >
+              <small>next post</small>
+              {next.frontmatter.title}
             </Link>
           )}
         </LinkWrapper>
         <LinkWrapper>
-          {nextPost && (
-            <Link href={nextPost.slug} key={nextPost.slug}>
-              <small>next post</small>
-              {nextPost.title}
+          {prev && (
+            <Link
+              href={`/${prev.params.slug.join('/')}`}
+              key={`/${prev.params.slug.join('/')}`}
+            >
+              <small>previous post</small>
+              {prev.frontmatter.title}
             </Link>
           )}
         </LinkWrapper>
@@ -142,12 +149,14 @@ Post.propTypes = {
   components: PropTypes.object,
   content: PropTypes.object.isRequired,
   frontmatter: PropTypes.object.isRequired,
-  mentionedIn: PropTypes.array
+  mentionedIn: PropTypes.array,
+  meta: PropTypes.object
 };
 
 Post.defaultProps = {
   components: {},
-  mentionedIn: []
+  mentionedIn: [],
+  meta: null
 };
 
 export default Post;

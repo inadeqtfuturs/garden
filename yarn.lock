@@ -9011,10 +9011,10 @@ nested-error-stacks@^2.0.0, nested-error-stacks@^2.1.0:
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.1.tgz#26c8a3cee6cc05fbcf1e333cd2fc3e003326c0b5"
   integrity sha512-9iN1ka/9zmX1ZvLV9ewJYEk9h7RyRRtqdK0woXcqohu8EWIerfPUjYJPg0ULy0UqP7cslmdGc8xKDJcojlKiaw==
 
-next-mdx-relations@^0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/next-mdx-relations/-/next-mdx-relations-0.0.14.tgz#fc33caff97d67fa122c333e4a577adb92fd73016"
-  integrity sha512-HTbVaXFLdh9IGgZOhPY0pLPamNwB4XBtBNHptHX4BJvUjPwzOaQ7QI0GYMkMuXH0mjWMPuYSSmdu64LMTIlWXA==
+next-mdx-relations@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/next-mdx-relations/-/next-mdx-relations-0.0.16.tgz#756ec0563fddc30941ed6eb097d748b31323d36d"
+  integrity sha512-DNfaEIRaajVouGEY5ay5aF6dEk+E9qukcUTdrs4n7OJJ6u9lBzqb50PT4V/IaQd6ltS7CoieRX3CDIGm/OntIQ==
 
 next-mdx-remote@^4.0.3:
   version "4.0.3"

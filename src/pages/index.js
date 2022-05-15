@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pick from 'lodash/pick';
+// import pick from 'lodash/pick';
 
 import { Excerpt, Layout, SEO } from '@components';
 import { getPages } from '@mdx';
 
 export default function Home({ recentPosts }) {
+  // console.log('@--> recentPosts', recentPosts);
   return (
     <Layout>
       <SEO title="🌱 garden" />
@@ -69,7 +70,7 @@ Home.defaultProps = {
   recentPosts: []
 };
 
-const whitelist = ['frontmatter', 'params', 'filePath'];
+// const whitelist = ['frontmatter', 'params', 'filePath'];
 
 export async function getStaticProps() {
   const pages = await getPages();
@@ -78,8 +79,8 @@ export async function getStaticProps() {
       ({ frontmatter: { date: a } }, { frontmatter: { date: b } }) =>
         new Date(b) - new Date(a)
     )
-    .slice(0, 4)
-    .map(p => pick(p, whitelist));
+    .slice(0, 4);
+  // .map(p => pick(p, whitelist));
 
   return {
     props: {

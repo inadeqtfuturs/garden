@@ -72,10 +72,14 @@ Garden.propTypes = {
 
 export async function getStaticProps() {
   const posts = await getPages();
+  const sortedPosts = posts.sort(
+    ({ frontmatter: { date: a } }, { frontmatter: { date: b } }) =>
+      new Date(b) - new Date(a)
+  );
 
   return {
     props: {
-      posts
+      posts: sortedPosts
     }
   };
 }
