@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-const visit = require('unist-util-visit');
-const tocUtil = require('mdast-util-toc');
-const get = require('lodash/get');
+import { visit } from 'unist-util-visit';
+import { toc as tocUtil } from 'mdast-util-toc';
+import get from 'lodash/get';
 
 const addClass = (node, classes = []) => {
   node.data = node.data || {};
@@ -49,4 +49,4 @@ function parse(options = {}) {
   return transformer;
 }
 
-module.exports = parse;
+export default parse;

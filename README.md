@@ -10,7 +10,7 @@ checkout the [documentation](DOCUMENTATION.md) to get started.
 ## tech
 
 - nextjs
-- md/mdx authoring using [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote)
+- md/mdx authoring using [`next-mdx-relations`](https://github.com/inadeqtfuturs/next-mdx-relations)
 - theme-ui
 - styled-components
 - jest/github actions (ci/cd)
@@ -23,6 +23,19 @@ fork or clone
 ```bash
 yarn
 yarn dev
+```
+
+## storybook
+
+```bash 
+nvm use
+yarn stories
+```
+
+## test
+
+```bash
+yarn test
 ```
 
 deploy with vercel or netlify

@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 
 function Code({ children, className }) {
-  const language = className.replace(/language-/, '');
-  return (
+  const language = className?.replace(/language-/, '');
+  const match = /language-(\w+)/.exec(className || '');
+  return match ? (
     <Highlight
       {...defaultProps}
       code={children}
-      language={language}
+      language={language || 'jsx'}
       theme={null}
     >
       {({
@@ -33,12 +34,18 @@ function Code({ children, className }) {
         </pre>
       )}
     </Highlight>
+  ) : (
+    <code className={className}>{children}</code>
   );
 }
 
 Code.propTypes = {
   children: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired
+  className: PropTypes.string
+};
+
+Code.defaultProps = {
+  className: null
 };
 
 export default Code;
