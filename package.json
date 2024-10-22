@@ -41,8 +41,8 @@
     "unist-util-visit": "4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.18.2",
-    "@babel/plugin-syntax-jsx": "7.17.12",
+    "@babel/core": "7.25.9",
+    "@babel/plugin-syntax-jsx": "7.25.9",
     "@storybook/addon-actions": "6.4.22",
     "@storybook/addon-essentials": "6.4.22",
     "@storybook/addon-links": "6.4.22",
