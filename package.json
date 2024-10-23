@@ -59,7 +59,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-react": "7.30.0",
+    "eslint-plugin-react": "7.37.2",
     "jest": "28.1.3",
     "prettier": "2.6.2",
     "react-is": "18.1.0",
