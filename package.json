@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@emotion/react": "11.9.3",
-    "@theme-ui/color": "0.14.5",
-    "@theme-ui/prism": "0.14.5",
+    "@theme-ui/color": "0.17.1",
+    "@theme-ui/prism": "0.17.1",
     "babel-plugin-styled-components": "2.0.7",
     "fast-glob": "3.2.11",
     "fuse.js": "6.6.2",
@@ -37,7 +37,7 @@
     "remark-slug": "7.0.1",
     "styled-components": "5.3.5",
     "styled-system": "5.1.5",
-    "theme-ui": "0.14.5",
+    "theme-ui": "0.17.1",
     "unist-util-visit": "4.1.0"
   },
   "devDependencies": {
